@@ -1,0 +1,5 @@
+{
+  "scripts": {
+    "server:dev": "pnpm run -C server dev"
+  }
+}
