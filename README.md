@@ -11,3 +11,9 @@ Install the dependencies
 ```shell
 pnpm install
 ```
+
+Run in development mode
+
+```shell
+pnpm dev
+```
