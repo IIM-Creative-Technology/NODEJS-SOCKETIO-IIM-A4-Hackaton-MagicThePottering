@@ -2,10 +2,16 @@ import 'dotenv/config';
 import crypto from 'node:crypto';
 import http from 'node:http';
 import express from 'express';
+import proxy from 'express-http-proxy';
 import { Server } from 'socket.io';
 import { initializeDataSource } from './config/Database';
+import ClientToServerEvents from './types/ClientToServerEvents';
+import InterServerEvents from './types/InterServerEvents';
+import ServerToClientEvents from './types/ServerToClientEvents';
+import SocketData from './types/SocketData';
 
 const app = express();
+app.use(proxy('http://localhost:5173'));
 const server = http.createServer(app);
 const host = 'localhost';
 const port = 8080;
@@ -101,6 +107,3 @@ const users: Map<string, { username: string, room: string }> = new Map();
     console.log(`listening on http://localhost:${port}`);
   });
 })();
-
-
-
