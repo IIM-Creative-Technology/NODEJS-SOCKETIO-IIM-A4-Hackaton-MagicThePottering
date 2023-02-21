@@ -1,3 +1,5 @@
-console.log('Hello from client');
-console.log(<div>hello</div>);
-export {};
+import "modern-normalize/modern-normalize.css"
+import Homepage from "./Homepage";
+import {createRoot} from "react-dom/client";
+
+createRoot(document.getElementById("root")!).render(<Homepage/>);
