@@ -3,7 +3,12 @@ import crypto from 'node:crypto';
 import http from 'node:http';
 import express from 'express';
 import { Server } from 'socket.io';
-import { initializeDataSource } from './config/Database';
+import {getDataSource, initializeDataSource} from './config/Database';
+import {ClientToServerEvents} from "./types/ClientToServerEvents";
+import {ServerToClientEvents} from "./types/ServerToClientEvents";
+import {InterServerEvents} from "./types/InterServerEvents";
+import {SocketData} from "./types/SocketData";
+
 
 const app = express();
 const server = http.createServer(app);
@@ -17,6 +22,7 @@ const rooms: Array<{ id: string, name: string }> = [];
 const users: Map<string, { username: string, room: string }> = new Map();
 (async () => {
   await initializeDataSource();
+  getDataSource();
 
   function getRoomUserList (room: string): Array<string> {
     let roomUserList: Array<string> = [];
