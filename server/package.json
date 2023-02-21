@@ -1,7 +1,8 @@
 {
   "name": "@magic-the-pottering/server",
   "dependencies": {
-    "express": "^4.18.2"
+    "express": "^4.18.2",
+    "socket.io": "^4.6.0"
   },
   "devDependencies": {
     "@tsconfig/node-lts": "^18.12.1",
@@ -12,6 +13,6 @@
     "typescript": "^4.9.5"
   },
   "scripts": {
-    "dev": "nodemon -w src src/index.ts"
+    "dev": "nodemon -w src src/main.ts"
   }
 }
