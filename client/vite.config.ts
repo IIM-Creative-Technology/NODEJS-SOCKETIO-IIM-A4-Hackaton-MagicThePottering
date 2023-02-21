@@ -1,9 +1,11 @@
 import { defineConfig } from 'vite';
 import { resolve } from 'node:path';
+import viteReact from "@vitejs/plugin-react";
 
 export default defineConfig({
   appType: 'mpa',
   root   : resolve(__dirname, 'src'),
+  plugins: [viteReact()],
   server : {
     port      : 5173,
     strictPort: true,
