@@ -1,3 +1,3 @@
-interface InterServerEvents {
+export interface InterServerEvents {
     ping: () => void;
 }
