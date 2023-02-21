@@ -1,8 +1,5 @@
-import * as process from 'process';
 import { DataSource } from 'typeorm';
 import Card from '../entities/Card';
-
-console.log(typeof process.env.POSTGRES_PASSWORD, process.env.POSTGRES_PASSWORD);
 
 const dataSource = new DataSource({
   type       : 'postgres',
