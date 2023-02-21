@@ -17,3 +17,9 @@ Run in development mode
 ```shell
 pnpm dev
 ```
+
+Routes
+------
+
+* /
+* /login/
