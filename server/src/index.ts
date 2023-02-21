@@ -4,7 +4,7 @@ import http from 'node:http';
 import express from 'express';
 import proxy from 'express-http-proxy';
 import { Server } from 'socket.io';
-import { initializeDataSource } from './config/Database';
+import { getDataSource, initializeDataSource } from './config/Database';
 import ClientToServerEvents from './types/ClientToServerEvents';
 import InterServerEvents from './types/InterServerEvents';
 import ServerToClientEvents from './types/ServerToClientEvents';
