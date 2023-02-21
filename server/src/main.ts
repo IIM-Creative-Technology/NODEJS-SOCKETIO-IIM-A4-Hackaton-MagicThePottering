@@ -18,7 +18,7 @@ const rooms: Array<{id: string, name: string}> = []
 
 const users: Map<string, {username: string, room: string}> = new Map()
 
-function getRoomUserList(room: string) {
+function getRoomUserList(room: string): Array<string> {
     let roomUserList: Array<string> = []
     users.forEach(user => {
         if (room === user.room) {
@@ -26,6 +26,13 @@ function getRoomUserList(room: string) {
         }
     })
     return roomUserList
+}
+
+function roomExist(givenRoomName: string) {
+    rooms.forEach(room => {
+        if (room.name === givenRoomName) return true
+    })
+    return false
 }
 
 io.on('connection', (socket) => {
@@ -70,8 +77,20 @@ io.on('connection', (socket) => {
     });
 
     socket.on('joinRoom', async (params) => {
-        let roomUserList = getRoomUserList(params.roomName);
-        rooms.push({id: socket.id, name: params.roomName});
+        const roomUserList: Array<string> = getRoomUserList(params.roomName);
+        let roomId: string
+        if (!roomExist(params.roomName)) {
+            rooms.push({id: socket.id, name: params.roomName});
+        }
+        else if (users.has(socket.id)) {
+            const user = users.get(socket.id);
+            if (!user) return;
+            users.set(socket.id, {
+                username: user.username,
+                room: params.roomName,
+            });
+        }
+        
     })
 
     socket.on('disconnect', () => {
