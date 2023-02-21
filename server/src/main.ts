@@ -1,8 +1,8 @@
-import crypto from "crypto";
-import { Server } from "socket.io";
-import http from "http";
-import express from 'express';
+import crypto from "node:crypto";
+import http from "node:http";
 
+import { Server } from "socket.io";
+import express from 'express';
 
 
 const app = express();
@@ -10,31 +10,23 @@ const server = http.createServer(app);
 const host = "localhost";
 const port = 8080;
 
-interface ServerToClientEvents {
-    noArg: () => void;
-    basicEmit: (a: number, b: string, c: Buffer) => void;
-    withAck: (d: string, callback: (e: number) => void) => void;
-}
-
-interface ClientToServerEvents {
-    signUp: (params: Object) => void;
-    signIn: (params: Object) => void;
-}
-
-interface InterServerEvents {
-    ping: () => void;
-}
-
-interface SocketData {
-    name: string;
-    age: number;
-}
-
 const io = new Server<ClientToServerEvents, ServerToClientEvents, InterServerEvents, SocketData>();
 
+const games: Map<string, string> = new Map()
 
+const rooms: Array<{id: string, name: string}> = []
 
+const users: Map<string, {username: string, room: string}> = new Map()
 
+function getRoomUserList(room: string) {
+    let roomUserList: Array<string> = []
+    users.forEach(user => {
+        if (room === user.room) {
+            roomUserList.push(user.username)
+        }
+    })
+    return roomUserList
+}
 
 io.on('connection', (socket) => {
     console.log('a user connected');
@@ -77,6 +69,10 @@ io.on('connection', (socket) => {
         // }
     });
 
+    socket.on('joinRoom', async (params) => {
+        let roomUserList = getRoomUserList(params.roomName);
+        rooms.push({id: socket.id, name: params.roomName});
+    })
 
     socket.on('disconnect', () => {
         console.log('user disconnected');
