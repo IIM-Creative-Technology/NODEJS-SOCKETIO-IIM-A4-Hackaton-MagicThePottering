@@ -11,8 +11,9 @@ export default class Card {
     @Column()
     description!: string;
 
-    @Column()
-    image_url!: string;
+    @Column({nullable: true})
+    //image_url nullable
+    image_url?: string;
 
     @Column()
     base_mana_cost!: number;
