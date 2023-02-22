@@ -1,9 +1,11 @@
-import Card from "../entities/Card";
+import InGameCard from "./InGameCard";
 
 export default interface Board {
-    hand: Array<Card> | null,
-    deck: Array<Card> | null,
-    graveyard: Array<Card> | null,
-    battlefield: Array<Card> | null,
-    mana: number | null
+    id: string,
+    hand: Array<InGameCard> | null,
+    deck: Array<InGameCard> | null,
+    graveyard: Array<InGameCard> | null,
+    battlefield: Array<InGameCard> | null,
+    mana: number | null,
+    health: number | null
 }

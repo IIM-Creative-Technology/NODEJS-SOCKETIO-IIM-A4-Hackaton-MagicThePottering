@@ -1,6 +1,7 @@
 import 'dotenv/config';
 import crypto from 'node:crypto';
 import http from 'node:http';
+import { v4 as uuidv4 } from "uuid";
 import express, {Request, Response} from 'express';
 import proxy from 'express-http-proxy';
 import {Server} from 'socket.io';
@@ -9,27 +10,32 @@ import ClientToServerEvents from './types/ClientToServerEvents';
 import ServerToClientEvents from './types/ServerToClientEvents';
 import InterServerEvents from './types/InterServerEvents';
 import SocketData from './types/SocketData';
-import Card from "./entities/Card";
-
-import Game from "./types/Game";
-import Board from "./types/Board";
+import InGameCard from './types/InGameCard';
+import Card from './entities/Card';
+import Game from './types/Game';
+import Board from './types/Board';
 
 const app = express();
 app.use(express.json());
 app.use(express.raw());
 
-const playerDeck: Array<Card> = [];
-const playerHand: Array<Card> = [];
+let playerDeck: Array<InGameCard> = [];
+let playerHand: Array<InGameCard> = [];
 
-app.get('/pioche', async (req: Request, res: Response) => {
+const users: Map<string, { username: string, room: string }> = new Map();
 
-    const playerDeck = await getDataSource().createQueryBuilder(Card, "card")
-        .select()
+const games: Map<string, Game> = new Map();
+
+app.get('/init-game', async (req: Request, res: Response) => {
+
+    let data = await getDataSource().createQueryBuilder(Card, "card")
+        .select("name, description, base_mana_cost, type, base_strength, base_health")
         .orderBy("RANDOM()")
         .getMany()
 
-    const playerHand = playerDeck.slice(0, 5);
-    playerDeck.splice(0, 5);
+    playerDeck = data.map(card => new InGameCard(uuidv4(), card.name, card.description, card.image_url, card.base_mana_cost, card.type, card.base_strength, card.base_health))
+
+    playerHand = playerDeck.slice(0, 5).splice(0, 5);
 
     res.send({
         playerHand: playerHand,
@@ -37,10 +43,29 @@ app.get('/pioche', async (req: Request, res: Response) => {
     })
 });
 
+app.post('/cast', async (req: Request, res: Response) => {
+    if (playerHand.find(inGameCard => inGameCard.id === req.body.cardId)) {
+        const game = games.get(req.body.roomId);
+        if (!game) return;
+
+        const board = game.boards.find(board => board.id === req.body.userId);
+        if (!board) return;
+
+        const playedCard = board.hand!.find(inGameCard => inGameCard.id === req.body.cardId);
+        if (!playedCard) return;
+
+        const index = board.hand!.indexOf(playedCard);
+        if (index === -1) return;
+
+        if (board.hand!.splice(index, 1).length !== 0) board.battlefield!.push(playedCard);
+
+    } else {
+        return "CHEATER";
+    }
+})
+
 app.post('/pioche', async (req: Request, res: Response) => {
     //raw body player hand and player deck
-    const playerHand = req.body.playerHand;
-    const playerDeck = req.body.playerDeck;
 
     playerHand.push(playerDeck[0]);
     playerDeck.splice(0, 1);
@@ -56,18 +81,14 @@ const server = http.createServer(app);
 const host = 'localhost';
 const port = 8080;
 
-const io = new Server<ClientToServerEvents, ServerToClientEvents, InterServerEvents, SocketData>();
-
-const users: Map<string, { username: string, room: string }> = new Map();
-
-const games: Map<string, Game> = new Map();
-
 
 (async () => {
   await initializeDataSource();
   // const test = getDataSource();
   //
-  // console.log(await test.manager.find(Card));
+  // console.log(await test.manager.find(Card))
+
+  const io = new Server<ClientToServerEvents, ServerToClientEvents, InterServerEvents, SocketData>();
 
   io.on('connection', (socket) => {
     console.log('a user connected');
@@ -93,9 +114,9 @@ const games: Map<string, Game> = new Map();
     socket.on('joinRoom', async (params: {roomName: string}) => {
 
       socket.join(params.roomName);
-      const board: Map<string, Board> = new Map();
-      board.set(socket.id, {hand: null, deck: null, graveyard: null, battlefield: null, mana: null})
-      games.set(params.roomName, new Game(params.roomName, board));
+      const boards: Array<Board> = [];
+      boards.push({id: socket.id, hand: null, deck: null, graveyard: null, battlefield: null, mana: null, health: null})
+      games.set(params.roomName, new Game(boards));
     });
   });
 

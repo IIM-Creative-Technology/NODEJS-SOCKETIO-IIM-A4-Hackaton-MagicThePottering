@@ -1,11 +1,9 @@
 import Boards from './Board'
 
 export default class Game {
-    constructor(id: string, boards: Map<string, Boards>) {
-        this.id = id
+    constructor(boards: Array<Boards>) {
         this.boards = boards
     }
-    id: string
-    boards: Map<string, Boards>
+    boards: Array<Boards>
 }
 
