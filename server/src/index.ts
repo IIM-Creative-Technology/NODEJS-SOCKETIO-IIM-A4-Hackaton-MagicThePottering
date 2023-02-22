@@ -46,12 +46,12 @@ const gameBoardPlayer2: Board = {
     health: 20
 }
 
-games.set("laSuperGame", new Game("laSuperGame", [gameBoardPlayer1, gameBoardPlayer2]));
+games.set("laSuperGame", new Game([gameBoardPlayer1, gameBoardPlayer2]));
 
 app.get('/init-game', async (req: Request, res: Response) => {
 
     let data = await getDataSource().createQueryBuilder(Card, "card")
-        .select("name, description, base_mana_cost, type, base_strength, base_health")
+        .select(["card.name", "card.description", "card.image_url", "card.base_mana_cost", "card.type", "card.base_strength", "card.base_health"])
         .orderBy("RANDOM()")
         .getMany()
 
@@ -174,7 +174,7 @@ const port = 8080;
                 mana: null,
                 health: null
             })
-            games.set(params.roomName, new Game(params.roomName, boards));
+            games.set(params.roomName, new Game(boards));
         });
     });
 
