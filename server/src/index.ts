@@ -1,11 +1,11 @@
 import 'dotenv/config';
 import crypto from 'node:crypto';
 import http from 'node:http';
-import { v4 as uuidv4 } from "uuid";
-import express, { Request, Response } from 'express';
+import {v4 as uuidv4} from "uuid";
+import express, {Request, Response} from 'express';
 import proxy from 'express-http-proxy';
-import { Server } from 'socket.io';
-import { getDataSource, initializeDataSource } from './config/Database';
+import {Server} from 'socket.io';
+import {getDataSource, initializeDataSource} from './config/Database';
 import ClientToServerEvents from './types/ClientToServerEvents';
 import ServerToClientEvents from './types/ServerToClientEvents';
 import InterServerEvents from './types/InterServerEvents';
@@ -14,7 +14,7 @@ import InGameCard from './types/InGameCard';
 import Card from './entities/Card';
 import Game from './types/Game';
 import Board from './types/Board';
-import { Steps } from './types/Steps.enum';
+import {Steps} from './types/Steps.enum';
 
 const app = express();
 app.use(express.json());
@@ -34,6 +34,7 @@ const gameBoardPlayer1: Board = {
     deck: null,
     graveyard: null,
     battlefield: null,
+    attackingCards: null,
     mana: null,
     health: 20
 }
@@ -43,6 +44,7 @@ const gameBoardPlayer2: Board = {
     deck: null,
     graveyard: null,
     battlefield: null,
+    attackingCards: null,
     mana: null,
     health: 20
 }
@@ -52,11 +54,11 @@ games.set("laSuperGame", new Game(null, [gameBoardPlayer1, gameBoardPlayer2]));
 app.get('/init-game', async (req: Request, res: Response) => {
 
     let data = await getDataSource().createQueryBuilder(Card, "card")
-        .select(["card.name", "card.description", "card.image_url", "card.base_mana_cost", "card.type", "card.base_strength", "card.base_health"])
+        .select()
         .orderBy("RANDOM()")
         .getMany();
 
-    playerDeck = data.map(card => new InGameCard(uuidv4(), card.name, card.description, card.image_url, card.base_mana_cost, card.type, card.base_strength, card.base_health))
+    playerDeck = data.map(card => new InGameCard(uuidv4(), card.id, card.name, card.description, card.image_url, card.base_mana_cost, card.type, card.base_strength, card.base_health))
 
     playerHand = playerDeck.slice(0, 5).splice(0, 5);
 
@@ -116,29 +118,79 @@ app.post('/attack', async (req: Request, res: Response) => {
     // - attackingCardId
     // - roomName
 
-    const attackerId: string = req.body.attackerId;
-    const attackingCardId: string = req.body.attackingCardId;
-    const attackingCard: Card = (await getDataSource().manager.findOneBy(Card, {id: attackingCardId}))!;
+
+    // const attackerId: string = req.body.attackerId;
+    // const attackingCardId: string = req.body.attackingCardId;
+    // const attackingCard: Card = (await getDataSource().manager.findOneBy(Card, {id: attackingCardId}))!;
 
     const game = games.get(req.body.roomId)
     if (!game) return;
     if (game.step !== Steps.ATTACK) return "wrong phase";
 
     const boards = game.boards;
-    const opponentBoard = boards.find(board => board.id !== attackerId);
 
-    opponentBoard!.health! -= attackingCard.base_strength;
+    const attackerId = req.body.attackerId;
+    const attackerBoard = boards.find(board => board.id === attackerId);
+    if (!attackerBoard) return;
 
-    if (opponentBoard!.health! <= 0) {
-        res.send({
-            opponentBoardHealth: opponentBoard!.health,
-            winner: attackerId
+    const attackingCardsIds: string[] = req.body.attackingCardsIds;
+    let cardExistsOnBoard = true;
+    attackingCardsIds.forEach(attackingCardId => {
+        if (!attackerBoard.battlefield) return;
+        const foundCard = attackerBoard.battlefield.find(inGameCard => inGameCard.id === attackingCardId);
+        if (!foundCard) cardExistsOnBoard = false;
+    })
+    if (!cardExistsOnBoard) return;
+
+    game.step = Steps.DEFEND;
+    // const opponentBoard = boards.find(board => board.id !== attackerId);
+
+    // opponentBoard!.health! -= attackingCard.base_strength;
+    //
+    // if (opponentBoard!.health! <= 0) {
+    //     res.send({
+    //         opponentBoardHealth: opponentBoard!.health,
+    //         winner: attackerId
+    //     })
+    // } else {
+    //     res.send({
+    //         opponentBoardHealth: opponentBoard!.health
+    //     })
+    // }
+})
+
+app.post('/defend', async (req: Request, res: Response) => {
+    // Need :
+    // AttackingCard
+    // DefendingCard can be null
+
+    const game = games.get(req.body.roomId)
+    if (!game) return;
+    if (game.step !== Steps.DEFEND) return "wrong phase";
+
+    const boards = game.boards;
+    const defenderBoard = boards.find(board => board.id === req.body.defenderId);
+    if (!defenderBoard) return;
+    const defenderBattlefield = defenderBoard.battlefield;
+    if (!defenderBattlefield) return;
+
+    const attackerBoard = boards.find(board => board.id !== req.body.attackerId);
+    if (!attackerBoard) return;
+    const attackerBattlefield = attackerBoard.battlefield;
+    if (!attackerBattlefield) return;
+
+    const battlingCards: Array<{ attackingCardId: string, defendingCardIds: Array<Card> }> = req.body.battleingCards;
+
+    battlingCards.forEach(battlingCard => {
+        const attackingCard = attackerBattlefield.find(inGameCard => inGameCard.id === battlingCard.attackingCardId);
+        if (!attackingCard) return;
+        let defendersCards: Array<Card> = [];
+        battlingCard.defendingCardIds.forEach(defendingCardId => {
+            const defendingCard = defenderBattlefield.find(inGameCard => inGameCard.id === defendingCardId);
+            if (!defendingCard) return;
+            defendersCards.push(defendingCard);
         })
-    } else {
-        res.send({
-            opponentBoardHealth: opponentBoard!.health
-        })
-    }
+    })
 })
 
 
@@ -186,6 +238,7 @@ const port = 8080;
                 deck: null,
                 graveyard: null,
                 battlefield: null,
+                attackingCards: null,
                 mana: null,
                 health: null
             })
