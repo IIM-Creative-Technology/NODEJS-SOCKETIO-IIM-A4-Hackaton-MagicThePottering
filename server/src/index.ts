@@ -65,9 +65,9 @@ const games: Map<string, Game> = new Map();
 
 (async () => {
   await initializeDataSource();
-  const test = getDataSource();
-
-  console.log(await test.manager.find(Card));
+  // const test = getDataSource();
+  //
+  // console.log(await test.manager.find(Card));
 
   io.on('connection', (socket) => {
     console.log('a user connected');
@@ -97,13 +97,9 @@ const games: Map<string, Game> = new Map();
       board.set(socket.id, {hand: null, deck: null, graveyard: null, battlefield: null, mana: null})
       games.set(params.roomName, new Game(params.roomName, board));
     });
+  });
 
     server.listen(8080, () => {
         console.log(`listening on http://localhost:${port}`);
     });
-  });
-
-  server.listen(2222, () => {
-    console.log(`listening on http://localhost:${port}`);
-  });
 })();

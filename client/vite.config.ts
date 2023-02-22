@@ -7,7 +7,7 @@ export default defineConfig({
   root   : resolve(__dirname, 'src'),
   plugins: [viteReact()],
   server : {
-    port      : 2222,
+    port      : 5173,
     strictPort: true,
   },
   build  : {
