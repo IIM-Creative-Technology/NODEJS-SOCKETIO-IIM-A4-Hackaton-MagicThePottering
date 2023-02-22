@@ -22,6 +22,31 @@ let playerDeck: Array<Card> = [];
 let playerHand: Array<Card> = [];
 let playerHealth: number = 20;
 
+const users: Map<string, { username: string, room: string }> = new Map();
+
+const games: Map<string, Game> = new Map();
+
+const gameBoardPlayer1: Board = {
+    id: "player1",
+    hand: null,
+    deck: null,
+    graveyard: null,
+    battlefield: null,
+    mana: null,
+    health: 20
+}
+const gameBoardPlayer2: Board = {
+    id: "player2",
+    hand: null,
+    deck: null,
+    graveyard: null,
+    battlefield: null,
+    mana: null,
+    health: 20
+}
+
+games.set("laSuperGame", new Game("laSuperGame", [gameBoardPlayer1, gameBoardPlayer2]));
+
 app.get('/pioche', async (req: Request, res: Response) => {
 
     playerDeck = await getDataSource().createQueryBuilder(Card, "card")
@@ -48,11 +73,31 @@ app.post('/pioche', async (req: Request, res: Response) => {
 })
 
 app.post('/attack', async (req: Request, res: Response) => {
-    let attacker : Card = req.body;
-    playerHealth -= attacker.base_strength;
-    res.send({
-        playerHealth: playerHealth
-    })
+
+    // Need :
+    // - attackerId
+    // - attackingCardId
+    // - roomName
+
+    const attackerId: string = req.body.attackerId;
+    const attackingCardId: string = req.body.attackingCardId;
+    const attackingCard: Card = (await getDataSource().manager.findOneBy(Card, {id: attackingCardId}))!;
+
+    const boards = games.get(req.body.roomName)!.boards;
+    const opponentBoard = boards.find(board => board.id !== attackerId);
+
+    opponentBoard!.health! -= attackingCard.base_strength;
+
+    if (opponentBoard!.health! <= 0) {
+        res.send({
+            opponentBoardHealth: opponentBoard!.health,
+            winner: attackerId
+        })
+    } else {
+        res.send({
+            opponentBoardHealth: opponentBoard!.health
+        })
+    }
 })
 
 
@@ -61,48 +106,51 @@ const server = http.createServer(app);
 const host = 'localhost';
 const port = 8080;
 
-const io = new Server<ClientToServerEvents, ServerToClientEvents, InterServerEvents, SocketData>();
-
-const users: Map<string, { username: string, room: string }> = new Map();
-
-const games: Map<string, Game> = new Map();
-
 
 (async () => {
-  await initializeDataSource();
-  // const test = getDataSource();
-  //
-  // console.log(await test.manager.find(Card));
-
-  io.on('connection', (socket) => {
-    console.log('a user connected');
-
-    // socket.on('signIn', async (params) => {
-    //   try {
-    //       const result = await User.findAll({
-    //           where: {
-    //               username: params.username
-    //           }
-    //       })
-    //       if (result.length === 0) throw new Error(`This username doesn't exist`)
-    //       const user = result[0].dataValues
-    //       const password = crypto.pbkdf2Sync(params.password, user.salt, 1000, 64, 'sha256').toString('hex')
-    //       if (password !== user.password) throw new Error('Wrong password')
-    //       socket.emit('sign-in-response', {status: 'done', user: {}});
+    await initializeDataSource();
+    // const test = getDataSource();
     //
-    //   } catch (e) {
-    //       socket.emit('sign-in-response', {status: 'error', message: e.message});
-    //   }
-    // });
+    // console.log(await test.manager.find(Card));
 
-    socket.on('joinRoom', async (params: {roomName: string}) => {
+    const io = new Server<ClientToServerEvents, ServerToClientEvents, InterServerEvents, SocketData>();
+    io.on('connection', (socket) => {
+        console.log('a user connected');
 
-      socket.join(params.roomName);
-      const board: Map<string, Board> = new Map();
-      board.set(socket.id, {hand: null, deck: null, graveyard: null, battlefield: null, mana: null})
-      games.set(params.roomName, new Game(params.roomName, board));
+        // socket.on('signIn', async (params) => {
+        //   try {
+        //       const result = await User.findAll({
+        //           where: {
+        //               username: params.username
+        //           }
+        //       })
+        //       if (result.length === 0) throw new Error(`This username doesn't exist`)
+        //       const user = result[0].dataValues
+        //       const password = crypto.pbkdf2Sync(params.password, user.salt, 1000, 64, 'sha256').toString('hex')
+        //       if (password !== user.password) throw new Error('Wrong password')
+        //       socket.emit('sign-in-response', {status: 'done', user: {}});
+        //
+        //   } catch (e) {
+        //       socket.emit('sign-in-response', {status: 'error', message: e.message});
+        //   }
+        // });
+
+        socket.on('joinRoom', async (params: { roomName: string }) => {
+
+            socket.join(params.roomName);
+            const boards: Array<Board> = [];
+            boards.push({
+                id: socket.id,
+                hand: null,
+                deck: null,
+                graveyard: null,
+                battlefield: null,
+                mana: null,
+                health: null
+            })
+            games.set(params.roomName, new Game(params.roomName, boards));
+        });
     });
-  });
 
     server.listen(8080, () => {
         console.log(`listening on http://localhost:${port}`);
