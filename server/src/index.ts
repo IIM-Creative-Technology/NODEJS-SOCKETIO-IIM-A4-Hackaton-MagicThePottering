@@ -179,18 +179,22 @@ app.post('/defend', async (req: Request, res: Response) => {
     const attackerBattlefield = attackerBoard.battlefield;
     if (!attackerBattlefield) return;
 
-    const battlingCards: Array<{ attackingCardId: string, defendingCardIds: Array<Card> }> = req.body.battleingCards;
+    const battlingCards: Array<{ attackingCardId: string, defendingCardIds: Array<string> }> = req.body.battleingCards;
 
+    let defendersCards: Array<InGameCard> = [];
     battlingCards.forEach(battlingCard => {
         const attackingCard = attackerBattlefield.find(inGameCard => inGameCard.id === battlingCard.attackingCardId);
         if (!attackingCard) return;
-        let defendersCards: Array<Card> = [];
         battlingCard.defendingCardIds.forEach(defendingCardId => {
             const defendingCard = defenderBattlefield.find(inGameCard => inGameCard.id === defendingCardId);
             if (!defendingCard) return;
             defendersCards.push(defendingCard);
-        })
-    })
+        });
+    });
+
+    defenderBoard.defendingCards = defendersCards;
+
+    game.step = Steps.RESOLVE;
 })
 
 

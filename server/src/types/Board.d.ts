@@ -7,6 +7,7 @@ export default interface Board {
     graveyard: Array<InGameCard> | null,
     battlefield: Array<InGameCard> | null,
     attackingCards: Array<InGameCard> | null,
+    defendingCards: Array<InGameCard> | null,
     mana: number | null
     health: number | null
 }
