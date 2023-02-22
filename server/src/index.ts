@@ -18,7 +18,6 @@ app.use(express.raw());
 const playerDeck: Array<Card> = [];
 const playerHand: Array<Card> = [];
 
-
 app.get('/pioche', async (req: Request, res: Response) => {
 
     const playerDeck = await getDataSource().createQueryBuilder(Card, "card")
