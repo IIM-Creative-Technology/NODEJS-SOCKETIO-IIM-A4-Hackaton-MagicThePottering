@@ -14,6 +14,7 @@ import InGameCard from './types/InGameCard';
 import Card from './entities/Card';
 import Game from './types/Game';
 import Board from './types/Board';
+import Steps from './types/Steps.enum';
 
 const app = express();
 app.use(express.json());
@@ -53,17 +54,16 @@ app.get('/init-game', async (req: Request, res: Response) => {
     let data = await getDataSource().createQueryBuilder(Card, "card")
         .select(["card.name", "card.description", "card.image_url", "card.base_mana_cost", "card.type", "card.base_strength", "card.base_health"])
         .orderBy("RANDOM()")
-        .getMany()
-    res.send({data: data})
+        .getMany();
 
     playerDeck = data.map(card => new InGameCard(uuidv4(), card.name, card.description, card.image_url, card.base_mana_cost, card.type, card.base_strength, card.base_health))
 
     playerHand = playerDeck.slice(0, 5).splice(0, 5);
 
-    // res.send({
-    //     playerHand: playerHand,
-    //     playerDeck: playerDeck
-    // })
+    res.send({
+        playerHand: playerHand,
+        playerDeck: playerDeck
+    })
 });
 
 
