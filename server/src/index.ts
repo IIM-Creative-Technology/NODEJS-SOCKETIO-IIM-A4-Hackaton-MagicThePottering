@@ -35,6 +35,7 @@ const gameBoardPlayer1: Board = {
     graveyard: null,
     battlefield: null,
     attackingCards: null,
+    defendingCards: null,
     mana: null,
     health: 20
 }
@@ -45,6 +46,7 @@ const gameBoardPlayer2: Board = {
     graveyard: null,
     battlefield: null,
     attackingCards: null,
+    defendingCards: null,
     mana: null,
     health: 20
 }
@@ -243,6 +245,7 @@ const port = 8080;
                 graveyard: null,
                 battlefield: null,
                 attackingCards: null,
+                defendingCards: null,
                 mana: null,
                 health: null
             })
