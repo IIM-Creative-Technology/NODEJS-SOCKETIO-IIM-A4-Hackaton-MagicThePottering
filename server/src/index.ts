@@ -1,11 +1,11 @@
 import 'dotenv/config';
 import crypto from 'node:crypto';
 import http from 'node:http';
-import {v4 as uuidv4} from "uuid";
-import express, {Request, Response} from 'express';
+import { v4 as uuidv4 } from "uuid";
+import express, { Request, Response } from 'express';
 import proxy from 'express-http-proxy';
-import {Server} from 'socket.io';
-import {getDataSource, initializeDataSource} from './config/Database';
+import { Server } from 'socket.io';
+import { getDataSource, initializeDataSource } from './config/Database';
 import ClientToServerEvents from './types/ClientToServerEvents';
 import ServerToClientEvents from './types/ServerToClientEvents';
 import InterServerEvents from './types/InterServerEvents';
@@ -14,7 +14,7 @@ import InGameCard from './types/InGameCard';
 import Card from './entities/Card';
 import Game from './types/Game';
 import Board from './types/Board';
-import Steps from './types/Steps.enum';
+import { Steps } from './types/Steps.enum';
 
 const app = express();
 app.use(express.json());
@@ -47,7 +47,7 @@ const gameBoardPlayer2: Board = {
     health: 20
 }
 
-games.set("laSuperGame", new Game([gameBoardPlayer1, gameBoardPlayer2]));
+games.set("laSuperGame", new Game(null, [gameBoardPlayer1, gameBoardPlayer2]));
 
 app.get('/init-game', async (req: Request, res: Response) => {
 
@@ -60,6 +60,11 @@ app.get('/init-game', async (req: Request, res: Response) => {
 
     playerHand = playerDeck.slice(0, 5).splice(0, 5);
 
+    const game = games.get(req.body.roomId)
+    if (!game) return;
+
+    game.step = Steps.BEGIN
+
     res.send({
         playerHand: playerHand,
         playerDeck: playerDeck
@@ -71,6 +76,7 @@ app.post('/cast', async (req: Request, res: Response) => {
     if (playerHand.find(inGameCard => inGameCard.id === req.body.cardId)) {
         const game = games.get(req.body.roomId);
         if (!game) return;
+        if (game.step !== Steps.MAIN) return "wrong phase";
 
         const board = game.boards.find(board => board.id === req.body.userId);
         if (!board) return;
@@ -90,6 +96,9 @@ app.post('/cast', async (req: Request, res: Response) => {
 
 app.post('/pioche', async (req: Request, res: Response) => {
     //raw body player hand and player deck
+    const game = games.get(req.body.roomId);
+    if (!game) return;
+    if (game.step !== Steps.BEGIN) return "CHEATER";
 
     playerHand.push(playerDeck[0]);
     playerDeck.splice(0, 1);
@@ -97,6 +106,7 @@ app.post('/pioche', async (req: Request, res: Response) => {
         playerHand: playerHand,
         playerDeck: playerDeck
     })
+    game.step = Steps.MAIN
 })
 
 app.post('/attack', async (req: Request, res: Response) => {
@@ -110,7 +120,11 @@ app.post('/attack', async (req: Request, res: Response) => {
     const attackingCardId: string = req.body.attackingCardId;
     const attackingCard: Card = (await getDataSource().manager.findOneBy(Card, {id: attackingCardId}))!;
 
-    const boards = games.get(req.body.roomName)!.boards;
+    const game = games.get(req.body.roomId)
+    if (!game) return;
+    if (game.step !== Steps.ATTACK) return "wrong phase";
+
+    const boards = game.boards;
     const opponentBoard = boards.find(board => board.id !== attackerId);
 
     opponentBoard!.health! -= attackingCard.base_strength;
@@ -175,7 +189,7 @@ const port = 8080;
                 mana: null,
                 health: null
             })
-            games.set(params.roomName, new Game(boards));
+            games.set(params.roomName, new Game(null, boards));
         });
     });
 

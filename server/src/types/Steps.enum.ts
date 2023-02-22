@@ -1,9 +1,8 @@
 export enum Steps {
     BEGIN = 0,
-    DRAW = 1,
-    MAIN = 2,
-    ATTACK = 3,
-    DEFEND = 4,
-    RESOLVE = 5,
-    END = 6
+    MAIN = 1,
+    ATTACK = 2,
+    DEFEND = 3,
+    RESOLVE = 4,
+    END = 5
 }
