@@ -18,17 +18,18 @@ const app = express();
 app.use(express.json());
 app.use(express.raw());
 
-const playerDeck: Array<Card> = [];
-const playerHand: Array<Card> = [];
+let playerDeck: Array<Card> = [];
+let playerHand: Array<Card> = [];
+let playerHealth: number = 20;
 
 app.get('/pioche', async (req: Request, res: Response) => {
 
-    const playerDeck = await getDataSource().createQueryBuilder(Card, "card")
+    playerDeck = await getDataSource().createQueryBuilder(Card, "card")
         .select()
         .orderBy("RANDOM()")
         .getMany()
 
-    const playerHand = playerDeck.slice(0, 5);
+    playerHand = playerDeck.slice(0, 5);
     playerDeck.splice(0, 5);
 
     res.send({
@@ -36,17 +37,21 @@ app.get('/pioche', async (req: Request, res: Response) => {
         playerDeck: playerDeck
     })
 });
-
 app.post('/pioche', async (req: Request, res: Response) => {
-    //raw body player hand and player deck
-    const playerHand = req.body.playerHand;
-    const playerDeck = req.body.playerDeck;
 
     playerHand.push(playerDeck[0]);
     playerDeck.splice(0, 1);
     res.send({
         playerHand: playerHand,
         playerDeck: playerDeck
+    })
+})
+
+app.post('/attack', async (req: Request, res: Response) => {
+    let attacker : Card = req.body;
+    playerHealth -= attacker.base_strength;
+    res.send({
+        playerHealth: playerHealth
     })
 })
 
