@@ -1,7 +1,7 @@
 import 'dotenv/config';
-import crypto from 'node:crypto';
+import fetch from 'isomorphic-fetch';
 import http from 'node:http';
-import express from 'express';
+import express, { Request, Response } from 'express';
 import proxy from 'express-http-proxy';
 import { Server } from 'socket.io';
 import { getDataSource, initializeDataSource } from './config/Database';
@@ -11,6 +11,35 @@ import ServerToClientEvents from './types/ServerToClientEvents';
 import SocketData from './types/SocketData';
 
 const app = express();
+app.use(express.json());
+
+type LoginRequestBody = { username: string, password: string }
+app.post('/login', (req: Request<{}, any, LoginRequestBody>, res: Response) => {
+  const { username, password } = req.body;
+  fetch(
+    'https://hp-api-iim.azurewebsites.net/auth/log-in',
+    {
+      method : 'POST',
+      headers: [['Content-Type', 'application/json']],
+      body   : JSON.stringify({
+        password,
+        name: username,
+      }),
+    })
+    .then(async (r) => ({ data: await r.json(), r }))
+    .then(({ r, data }) => {
+      if (!r.ok) {
+        throw { message: data.message };
+      }
+      res.status(200)
+        .json({ token: data.token });
+    })
+    .catch(({ message }) => {
+      res.status(500)
+        .json({ message });
+    });
+});
+
 app.use(proxy('http://localhost:5173'));
 const server = http.createServer(app);
 const host = 'localhost';

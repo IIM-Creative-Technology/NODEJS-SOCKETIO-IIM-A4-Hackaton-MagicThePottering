@@ -3,14 +3,15 @@ import { resolve } from 'node:path';
 import viteReact from '@vitejs/plugin-react';
 
 export default defineConfig({
-  appType: 'mpa',
-  root   : resolve(__dirname, 'src'),
-  plugins: [viteReact()],
-  server : {
+  appType    : 'mpa',
+  root       : resolve(__dirname, 'src'),
+  plugins    : [viteReact()],
+  server     : {
     port      : 5173,
     strictPort: true,
   },
-  build  : {
+  clearScreen: false,
+  build      : {
     rollupOptions: {
       input: {
         main : resolve(__dirname, 'src/index.html'),

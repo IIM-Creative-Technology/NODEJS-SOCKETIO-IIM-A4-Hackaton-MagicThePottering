@@ -1,11 +1,11 @@
 {
-  "compilerOptions": {
-      "experimentalDecorators": true
-  },
   "extends": "@tsconfig/node-lts/tsconfig.json",
   "compilerOptions": {
     "emitDecoratorMetadata": true,
-    "experimentalDecorators": true
+    "experimentalDecorators": true,
+    "lib": [
+      "DOM"
+    ]
   },
   "include": [
     "./src"
