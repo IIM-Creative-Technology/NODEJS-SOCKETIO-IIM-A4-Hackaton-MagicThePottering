@@ -2,6 +2,7 @@ import 'dotenv/config';
 import crypto from 'node:crypto';
 import http from 'node:http';
 import express from 'express';
+import proxy from 'express-http-proxy';
 import { Server } from 'socket.io';
 import { getDataSource, initializeDataSource } from './config/Database';
 import ClientToServerEvents from './types/ClientToServerEvents';
@@ -13,6 +14,7 @@ import Game from "./types/Game";
 import Board from "./types/Board";
 
 const app = express();
+app.use(proxy('http://localhost:5173'));
 const server = http.createServer(app);
 const host = 'localhost';
 const port = 8080;
@@ -23,10 +25,11 @@ const users: Map<string, { username: string, room: string }> = new Map();
 
 const games: Map<string, Game> = new Map();
 
+
 (async () => {
   await initializeDataSource();
   const test = getDataSource();
-
+  
   console.log(await test.manager.find(Card));
 
   io.on('connection', (socket) => {
@@ -67,6 +70,3 @@ const games: Map<string, Game> = new Map();
     console.log(`listening on http://localhost:${port}`);
   });
 })();
-
-
-
