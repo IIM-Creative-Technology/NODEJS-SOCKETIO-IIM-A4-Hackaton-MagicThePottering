@@ -54,15 +54,16 @@ app.get('/init-game', async (req: Request, res: Response) => {
         .select(["card.name", "card.description", "card.image_url", "card.base_mana_cost", "card.type", "card.base_strength", "card.base_health"])
         .orderBy("RANDOM()")
         .getMany()
+    res.send({data: data})
 
     playerDeck = data.map(card => new InGameCard(uuidv4(), card.name, card.description, card.image_url, card.base_mana_cost, card.type, card.base_strength, card.base_health))
 
     playerHand = playerDeck.slice(0, 5).splice(0, 5);
 
-    res.send({
-        playerHand: playerHand,
-        playerDeck: playerDeck
-    })
+    // res.send({
+    //     playerHand: playerHand,
+    //     playerDeck: playerDeck
+    // })
 });
 
 
