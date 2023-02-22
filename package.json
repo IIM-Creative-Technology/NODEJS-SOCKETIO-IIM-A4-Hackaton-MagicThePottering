@@ -1,5 +1,6 @@
 {
   "scripts": {
+    "clean": "taskkill -f -im node.exe",
     "dev": "run-p dev:*",
     "dev:server": "pnpm run -C server dev",
     "dev:client": "pnpm run -C client dev"

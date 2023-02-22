@@ -3,7 +3,14 @@ import crypto from 'node:crypto';
 import http from 'node:http';
 import express from 'express';
 import { Server } from 'socket.io';
-import { initializeDataSource } from './config/Database';
+import { getDataSource, initializeDataSource } from './config/Database';
+import ClientToServerEvents from './types/ClientToServerEvents';
+import ServerToClientEvents from './types/ServerToClientEvents';
+import InterServerEvents from './types/InterServerEvents';
+import SocketData from './types/SocketData';
+import Card from "./entities/Card";
+import Game from "./types/Game";
+import Board from "./types/Board";
 
 const app = express();
 const server = http.createServer(app);
@@ -11,85 +18,44 @@ const host = 'localhost';
 const port = 8080;
 
 const io = new Server<ClientToServerEvents, ServerToClientEvents, InterServerEvents, SocketData>();
-const games: Map<string, string> = new Map();
-const rooms: Array<{ id: string, name: string }> = [];
 
 const users: Map<string, { username: string, room: string }> = new Map();
+
+const games: Map<string, Game> = new Map();
+
 (async () => {
   await initializeDataSource();
+  const test = getDataSource();
 
-  function getRoomUserList (room: string): Array<string> {
-    let roomUserList: Array<string> = [];
-    users.forEach(user => {
-      if (room === user.room) {
-        roomUserList.push(user.username);
-      }
-    });
-    return roomUserList;
-  }
-
-  function roomExist (givenRoomName: string) {
-    rooms.forEach(room => {
-      if (room.name === givenRoomName) return true;
-    });
-    return false;
-  }
+  console.log(await test.manager.find(Card));
 
   io.on('connection', (socket) => {
     console.log('a user connected');
 
-    socket.on('signUp', async (params) => {
-      // try {
-      //     const result = await User.findAll({
-      //         where: {
-      //             username: params.username
-      //         }
-      //     });
-      //     if (result.length > 0) throw new Error(`${params.username} is already used`)
-      //     const newUserSalt = crypto.randomBytes(16).toString('hex');
-      //
-      //     User.create({username: params.username, salt: newUserSalt, password: crypto.pbkdf2Sync(params.password, newUserSalt, 1000, 64, 'sha256').toString('hex')})
-      //         .then(() => console.log("The user has been saved in the database"));
-      //     console.log(`${params.username} successfully added to db`);
-      //     socket.emit('sign-up-response', {status: 'done', user: {}});
-      // } catch (e) {
-      //     console.log(e.message)
-      //     socket.emit('sign-up-response', {status: 'error', message: e.message});
-      // }
-    });
+    // socket.on('signIn', async (params) => {
+    //   try {
+    //       const result = await User.findAll({
+    //           where: {
+    //               username: params.username
+    //           }
+    //       })
+    //       if (result.length === 0) throw new Error(`This username doesn't exist`)
+    //       const user = result[0].dataValues
+    //       const password = crypto.pbkdf2Sync(params.password, user.salt, 1000, 64, 'sha256').toString('hex')
+    //       if (password !== user.password) throw new Error('Wrong password')
+    //       socket.emit('sign-in-response', {status: 'done', user: {}});
+    //
+    //   } catch (e) {
+    //       socket.emit('sign-in-response', {status: 'error', message: e.message});
+    //   }
+    // });
 
-    socket.on('signIn', async (params) => {
-      // try {
-      //     const result = await User.findAll({
-      //         where: {
-      //             username: params.username
-      //         }
-      //     })
-      //     if (result.length === 0) throw new Error(`This username doesn't exist`)
-      //     const user = result[0].dataValues
-      //     const password = crypto.pbkdf2Sync(params.password, user.salt, 1000, 64, 'sha256').toString('hex')
-      //     if (password !== user.password) throw new Error('Wrong password')
-      //     socket.emit('sign-in-response', {status: 'done', user: {}});
-      //
-      // } catch (e) {
-      //     socket.emit('sign-in-response', {status: 'error', message: e.message});
-      // }
-    });
+    socket.on('joinRoom', async (params: {roomName: string}) => {
 
-    socket.on('joinRoom', async (params) => {
-      const roomUserList: Array<string> = getRoomUserList(params.roomName);
-      let roomId: string;
-      if (!roomExist(params.roomName)) {
-        rooms.push({ id: socket.id, name: params.roomName });
-      } else if (users.has(socket.id)) {
-        const user = users.get(socket.id);
-        if (!user) return;
-        users.set(socket.id, {
-          username: user.username,
-          room    : params.roomName,
-        });
-      }
-
+      socket.join(params.roomName);
+      const board: Map<string, Board> = new Map();
+      board.set(socket.id, {hand: null, deck: null, graveyard: null, battlefield: null, mana: null})
+      games.set(params.roomName, new Game(params.roomName, board));
     });
 
     socket.on('disconnect', () => {
@@ -97,7 +63,7 @@ const users: Map<string, { username: string, room: string }> = new Map();
     });
   });
 
-  server.listen(8080, () => {
+  server.listen(2222, () => {
     console.log(`listening on http://localhost:${port}`);
   });
 })();
