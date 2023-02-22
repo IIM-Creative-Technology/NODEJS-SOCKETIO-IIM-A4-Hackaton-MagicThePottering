@@ -46,7 +46,7 @@ const gameBoardPlayer2: Board = {
     health: 20
 }
 
-games.set("laSuperGame", new Game("laSuperGame", [gameBoardPlayer1, gameBoardPlayer2]));
+games.set("laSuperGame", new Game([gameBoardPlayer1, gameBoardPlayer2]));
 
 app.get('/init-game', async (req: Request, res: Response) => {
 
@@ -174,7 +174,8 @@ const port = 8080;
                 mana: null,
                 health: null
             })
-            games.set(params.roomName, new Game(params.roomName, boards));
+            games.set(params.roomName, new Game(boards));
+
         });
     });
 
