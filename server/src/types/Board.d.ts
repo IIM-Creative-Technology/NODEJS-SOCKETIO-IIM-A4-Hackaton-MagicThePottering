@@ -1,4 +1,4 @@
-import Card from "../entities/Card";
+import InGameCard from "./InGameCard";
 
 export default interface Board {
     id: string,

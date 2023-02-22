@@ -1,11 +1,9 @@
 import Board from './Board'
 
 export default class Game {
-    constructor(id: string, boards: Array<Board>) {
-        this.id = id
+    constructor(boards: Array<Board>) {
         this.boards = boards
     }
-    id: string
     boards: Array<Board>
 }
 

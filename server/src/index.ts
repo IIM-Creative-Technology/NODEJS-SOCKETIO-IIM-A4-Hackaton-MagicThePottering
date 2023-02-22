@@ -1,6 +1,7 @@
 import 'dotenv/config';
 import crypto from 'node:crypto';
 import http from 'node:http';
+import {v4 as uuidv4} from "uuid";
 import express, {Request, Response} from 'express';
 import proxy from 'express-http-proxy';
 import {Server} from 'socket.io';
@@ -9,17 +10,17 @@ import ClientToServerEvents from './types/ClientToServerEvents';
 import ServerToClientEvents from './types/ServerToClientEvents';
 import InterServerEvents from './types/InterServerEvents';
 import SocketData from './types/SocketData';
-import Card from "./entities/Card";
-
-import Game from "./types/Game";
-import Board from "./types/Board";
+import InGameCard from './types/InGameCard';
+import Card from './entities/Card';
+import Game from './types/Game';
+import Board from './types/Board';
 
 const app = express();
 app.use(express.json());
 app.use(express.raw());
 
-let playerDeck: Array<Card> = [];
-let playerHand: Array<Card> = [];
+let playerDeck: Array<InGameCard> = [];
+let playerHand: Array<InGameCard> = [];
 let playerHealth: number = 20;
 
 const users: Map<string, { username: string, room: string }> = new Map();
@@ -47,22 +48,47 @@ const gameBoardPlayer2: Board = {
 
 games.set("laSuperGame", new Game("laSuperGame", [gameBoardPlayer1, gameBoardPlayer2]));
 
-app.get('/pioche', async (req: Request, res: Response) => {
+app.get('/init-game', async (req: Request, res: Response) => {
 
-    playerDeck = await getDataSource().createQueryBuilder(Card, "card")
-        .select()
+    let data = await getDataSource().createQueryBuilder(Card, "card")
+        .select("name, description, base_mana_cost, type, base_strength, base_health")
         .orderBy("RANDOM()")
         .getMany()
 
-    playerHand = playerDeck.slice(0, 5);
-    playerDeck.splice(0, 5);
+    playerDeck = data.map(card => new InGameCard(uuidv4(), card.name, card.description, card.image_url, card.base_mana_cost, card.type, card.base_strength, card.base_health))
+
+    playerHand = playerDeck.slice(0, 5).splice(0, 5);
 
     res.send({
         playerHand: playerHand,
         playerDeck: playerDeck
     })
 });
+
+
+app.post('/cast', async (req: Request, res: Response) => {
+    if (playerHand.find(inGameCard => inGameCard.id === req.body.cardId)) {
+        const game = games.get(req.body.roomId);
+        if (!game) return;
+
+        const board = game.boards.find(board => board.id === req.body.userId);
+        if (!board) return;
+
+        const playedCard = board.hand!.find(inGameCard => inGameCard.id === req.body.cardId);
+        if (!playedCard) return;
+
+        const index = board.hand!.indexOf(playedCard);
+        if (index === -1) return;
+
+        if (board.hand!.splice(index, 1).length !== 0) board.battlefield!.push(playedCard);
+
+    } else {
+        return "CHEATER";
+    }
+})
+
 app.post('/pioche', async (req: Request, res: Response) => {
+    //raw body player hand and player deck
 
     playerHand.push(playerDeck[0]);
     playerDeck.splice(0, 1);
@@ -110,8 +136,8 @@ const port = 8080;
 (async () => {
     await initializeDataSource();
     // const test = getDataSource();
-    //
-    // console.log(await test.manager.find(Card));
+    // console.log(await test.manager.find(Card))
+
 
     const io = new Server<ClientToServerEvents, ServerToClientEvents, InterServerEvents, SocketData>();
     io.on('connection', (socket) => {
