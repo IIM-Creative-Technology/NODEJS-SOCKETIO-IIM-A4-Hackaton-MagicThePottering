@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Magic Harry Potter</title>
+    <link rel="stylesheet" type="text/css" href="styleCardJson.css" />
+</head>
+
+<body>
+    <div id="cardListDiv"></div>
+    <!-- <object class="svgCard" id="svgCard" data="../assets/Pottering-Card.svg" type="image/svg+xml"></object> -->
+    <!-- <object class="svgCard" id="svgCard" data="../assets/Pottering-Card.svg" type="image/svg+xml"></object> -->
+    <script>
+
+        let cardList;
+
+        window.onload = async function() {
+            const response = await fetch('../assets/pottering-cards.json');
+            cardList = await response.json();
+            console.log(cardList);
+            loadCards();
+        }
+
+        /*
+        const cardInfos = [
+            "Acromantula",
+            "5",
+            "Animal Fantastique",
+            "7",
+            "6",
+            "Une créature arachnéenne gigantesque, capable de parler et de comprendre le langage humain.",
+            "legendary",
+            "Gorgon.png",
+        ];*/
+
+        const cardRarityColor = {
+            mana: "rgb(0, 248, 255)",
+            common: "rgba(0, 0, 0, 0.25)",
+            uncommon: "rgb(43, 255, 0)",
+            rare: "rgb(0, 0, 255)",
+            epic: "rgb(212, 0, 255)",
+            lengendary: "rgb(255, 149, 0)",
+        };
+
+        function loadCards(){
+            /*
+            const svgDoc = document.getElementById(`svgCard`).contentDocument;
+            console.log(svgDoc.getElementsByClassName("cardName")[0]);
+            */
+
+            cardList.forEach((element, index) => {        
+                document.getElementById("cardListDiv").insertAdjacentHTML("beforeEnd", `
+                    <object class="svgCard" id="svgCard-${index}" data="../assets/Pottering-Card.svg" type="image/svg+xml"></object>
+                `)
+                document.getElementById(`svgCard-${index}`).addEventListener("load", function() {
+                    const svgDoc = document.getElementById(`svgCard-${index}`).contentDocument;
+                    //console.log(element)
+                    //console.log(element.rarity);
+                    svgDoc.getElementsByClassName("cardName")[0].textContent = element.name;
+                    svgDoc.getElementsByClassName("cardCost")[0].textContent = element.cost;
+                    svgDoc.getElementsByClassName("cardType")[0].textContent = element.type;
+                    if (element.stamina !== 0){
+                        svgDoc.getElementsByClassName("cardStrength")[0].textContent = element.strength;
+                        svgDoc.getElementsByClassName("cardEndurance")[0].textContent = element.stamina;
+                    }
+                    svgDoc.getElementsByClassName("cardDescription")[0].textContent = element.description;
+                    svgDoc.getElementsByClassName("cardRarity")[0].style.fill=cardRarityColor[`${element.rarity}`];
+                    svgDoc.getElementsByClassName("cardBackground")[0].style = `stop-color:${cardRarityColor[element.rarity]};stop-opacity:0.65`;
+                    svgDoc.getElementsByClassName("cardImage")[0].setAttributeNS('http://www.w3.org/1999/xlink', 'href', `images/${element.id}.png`);
+                })
+
+
+                /*
+                svgDoc.getElementsByClassName("cardName")[index].textContent = element[1];
+                svgDoc.getElementsByClassName("cardCost")[index].textContent = element[2];
+                svgDoc.getElementsByClassName("cardType")[index].textContent = element[3];
+                svgDoc.getElementsByClassName("cardStrength")[index].textContent = element[4];
+                svgDoc.getElementsByClassName("cardEndurance")[index].textContent = element[5];
+                svgDoc.getElementsByClassName("cardDescription")[index].textContent = element[6];
+                */
+            });
+
+            /*
+            console.log(document.getElementsByClassName("svgCard")[0]);
+            const svgDoc = document.getElementById(`svgCard-0`).contentDocument;
+            console.log(svgDoc.getElementsByClassName("cardName"));
+            */
+        }
+
+        /*
+        window.onload = function(){  
+            const svgDoc = document.getElementById("svgCard").contentDocument;
+            svgDoc.getElementById("cardName").textContent = cardInfos[0];
+            svgDoc.getElementById("cardCost").textContent = cardInfos[1];
+            svgDoc.getElementById("cardType").textContent = cardInfos[2];
+            svgDoc.getElementById("cardStrength").textContent = cardInfos[3];
+            svgDoc.getElementById("cardEndurance").textContent = cardInfos[4];
+            svgDoc.getElementById("cardDescription").textContent = cardInfos[5];
+            svgDoc.getElementById("cardRarity").style.fill=cardRarityColor[cardInfos[6]];
+            svgDoc.getElementById("cardBackground").style = `stop-color:${cardRarityColor[cardInfos[6]]};stop-opacity:0.65`;
+            //const image = svgDoc.getElementById("cardImage").getAttributeNS('http://www.w3.org/1999/xlink', 'href');
+            svgDoc.getElementById("cardImage").setAttributeNS('http://www.w3.org/1999/xlink', 'href', cardInfos[7]);
+        }*/
+
+        /*
+        function test() {
+            const svgDoc = document.getElementById("svgCard").contentDocument;
+            svgDoc.getElementById("cardName").textContent = cardInfos[0];
+            svgDoc.getElementById("cardCost").textContent = cardInfos[1];
+            svgDoc.getElementById("cardType").textContent = cardInfos[2];
+            svgDoc.getElementById("cardStrength").textContent = cardInfos[3];
+            svgDoc.getElementById("cardEndurance").textContent = cardInfos[4];
+            svgDoc.getElementById("cardRarity").style.fill=cardRarityColor[cardInfos[6]];
+        }
+        */
+        
+
+    </script>
+</body>
+
+</html>

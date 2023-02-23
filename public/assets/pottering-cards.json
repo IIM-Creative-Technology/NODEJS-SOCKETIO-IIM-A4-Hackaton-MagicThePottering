@@ -1,0 +1,1012 @@
+[
+  {
+    "id": 1,
+    "name": "Acromantula",
+    "cost": 5,
+    "type": "Animal Fantastique",
+    "strength": 7,
+    "stamina": 6,
+    "description": "Une créature arachnéenne gigantesque, capable de parler et de comprendre le langage humain.",
+    "rarity": "common"
+  },
+  {
+    "id": 2,
+    "name": "Basilic",
+    "cost": 7,
+    "type": "Animal Fantastique",
+    "strength": 9,
+    "stamina": 7,
+    "description": "Un serpent légendaire qui peut tuer instantanément ceux qui croisent son regard.",
+    "rarity": "common"
+  },
+  {
+    "id": 3,
+    "name": "Boursouflet",
+    "cost": 2,
+    "type": "Animal Fantastique",
+    "strength": 2,
+    "stamina": 2,
+    "description": "Une petite boule de poils qui éclate bruyamment lorsqu'elle est menacée.",
+    "rarity": "common"
+  },
+  {
+    "id": 4,
+    "name": "Bowtruckle",
+    "cost": 1,
+    "type": "Animal Fantastique",
+    "strength": 1,
+    "stamina": 3,
+    "description": "Une petite créature arboricole qui ressemble à un brin de bois, utilisée pour la fabrication de baguettes magiques.",
+    "rarity": "common"
+  },
+  {
+    "id": 5,
+    "name": "Calmar géant",
+    "cost": 6,
+    "type": "Animal Fantastique",
+    "strength": 8,
+    "stamina": 7,
+    "description": "Un immense céphalopode marin, souvent utilisé comme ingrédient dans les potions magiques.",
+    "rarity": "common"
+  },
+  {
+    "id": 6,
+    "name": "Centaure",
+    "cost": 4,
+    "type": "Être",
+    "strength": 6,
+    "stamina": 6,
+    "description": "Une créature mi-homme, mi-cheval, connue pour leur sagesse et leur habileté en tant que guerriers.",
+    "rarity": "common"
+  },
+  {
+    "id": 7,
+    "name": "Chimère",
+    "cost": 6,
+    "type": "Animal Fantastique",
+    "strength": 6,
+    "stamina": 6,
+    "description": "Une créature légendaire avec la tête d'un lion, le corps d'une chèvre et la queue d'un dragon.",
+    "rarity": "common"
+  },
+  {
+    "id": 8,
+    "name": "Chizpurfle",
+    "cost": 1,
+    "type": "Animal Fantastique",
+    "strength": 1,
+    "stamina": 1,
+    "description": "Un parasite insectoïde qui se nourrit de la magie des objets enchantés.",
+    "rarity": "common"
+  },
+  {
+    "id": 9,
+    "name": "Clabbert",
+    "cost": 2,
+    "type": "Animal Fantastique",
+    "strength": 2,
+    "stamina": 3,
+    "description": "Un petit singe magique avec une tête étrangement humaine, connu pour leur cri strident qui avertit de la présence de danger.",
+    "rarity": "common"
+  },
+  {
+    "id": 11,
+    "name": "Cornelongue",
+    "cost": 5,
+    "type": "Animal Fantastique",
+    "strength": 4,
+    "stamina": 4,
+    "description": "Un serpent avec des dents particulièrement venimeuses et une peau résistante à la magie.",
+    "rarity": "common"
+  },
+  {
+    "id": 12,
+    "name": "Crabe de feu",
+    "cost": 3,
+    "type": "Animal Fantastique",
+    "strength": 4,
+    "stamina": 3,
+    "description": "Un crustacé qui crache des flammes pour se défendre ou attaquer.",
+    "rarity": "common"
+  },
+  {
+    "id": 13,
+    "name": "Crapaud commun",
+    "cost": 1,
+    "type": "Animal Fantastique",
+    "strength": 1,
+    "stamina": 1,
+    "description": "Un animal amphibien souvent utilisé en potion magique pour ses propriétés curatives.",
+    "rarity": "common"
+  },
+  {
+    "id": 14,
+    "name": "Crup",
+    "cost": 2,
+    "type": "Animal Fantastique",
+    "strength": 1,
+    "stamina": 2,
+    "description": "Un petit chien magique originaire d'Angleterre avec deux queues.",
+    "rarity": "common"
+  },
+  {
+    "id": 15,
+    "name": "Détraqueur",
+    "cost": 5,
+    "type": "Non-Être",
+    "strength": 5,
+    "stamina": 5,
+    "description": "Une créature spectrale qui suce l'âme des humains, les laissant vides et sans émotion.",
+    "rarity": "common"
+  },
+  {
+    "id": 16,
+    "name": "Diablotin",
+    "cost": 2,
+    "type": "Non-Être",
+    "strength": 2,
+    "stamina": 2,
+    "description": "Une petite créature maléfique qui aime causer des ennuis et de la confusion.",
+    "rarity": "common"
+  },
+  {
+    "id": 17,
+    "name": "Doxy",
+    "cost": 2,
+    "type": "Animal Fantastique",
+    "strength": 1,
+    "stamina": 1,
+    "description": "Un petit insecte volant venimeux, utilisé pour la fabrication de potions magiques.",
+    "rarity": "common"
+  },
+  {
+    "id": 18,
+    "name": "Dragon",
+    "cost": 7,
+    "type": "Animal Fantastique",
+    "strength": 8,
+    "stamina": 9,
+    "description": "Une créature légendaire ailée avec des écailles résistantes à la magie et une capacité de cracher du feu.",
+    "rarity": "common"
+  },
+  {
+    "id": 19,
+    "name": "Éruptif",
+    "cost": 5,
+    "type": "Animal Fantastique",
+    "strength": 7,
+    "stamina": 2,
+    "description": "Une créature qui peut exploser à tout moment, causant une dévastation incroyable.",
+    "rarity": "common"
+  },
+  {
+    "id": 20,
+    "name": "Éthiopien à crête",
+    "cost": 2,
+    "type": "Animal Fantastique",
+    "strength": 2,
+    "stamina": 1,
+    "description": "Une créature avec une crête distinctive sur sa tête et une peau particulièrement résistante à la magie.",
+    "rarity": "common"
+  },
+  {
+    "id": 21,
+    "name": "Fée",
+    "cost": 1,
+    "type": "Animal Fantastique",
+    "strength": 1,
+    "stamina": 1,
+    "description": "Une petite créature ailée souvent considérée comme des esprits de la nature.",
+    "rarity": "common"
+  },
+  {
+    "id": 22,
+    "name": "Farfadet",
+    "cost": 1,
+    "type": "Animal Fantastique",
+    "strength": 1,
+    "stamina": 1,
+    "description": "Une petite créature espiègle connue pour jouer des tours aux humains.",
+    "rarity": "common"
+  },
+  {
+    "id": 23,
+    "name": "Fléreur",
+    "cost": 3,
+    "type": "Animal Fantastique",
+    "strength": 6,
+    "stamina": 6,
+    "description": "Une créature ressemblant à un chien avec une peau résistante à la magie et des dents acérées.",
+    "rarity": "common"
+  },
+  {
+    "id": 24,
+    "name": "Focifère",
+    "cost": 2,
+    "type": "Animal Fantastique",
+    "strength": 2,
+    "stamina": 2,
+    "description": "Une petite créature qui se nourrit de la chaleur et de la lumière, souvent utilisée en potion magique.",
+    "rarity": "common"
+  },
+  {
+    "id": 25,
+    "name": "Géant",
+    "cost": 6,
+    "type": "Non-Être",
+    "strength": 6,
+    "stamina": 9,
+    "description": "Une créature immense et forte, souvent peu intelligente et maladroite.",
+    "rarity": "common"
+  },
+  {
+    "id": 26,
+    "name": "Gnome",
+    "cost": 1,
+    "type": "Animal Fantastique",
+    "strength": 1,
+    "stamina": 1,
+    "description": "Une petite créature malicieuse qui adore jouer des tours et causer des ennuis.",
+    "rarity": "common"
+  },
+  {
+    "id": 27,
+    "name": "Gobelin",
+    "cost": 2,
+    "type": "Non-Être",
+    "strength": 2,
+    "stamina": 2,
+    "description": "Une créature petite et trapue avec une grande habileté pour la métallurgie.",
+    "rarity": "common"
+  },
+  {
+    "id": 28,
+    "name": "Grappin",
+    "cost": 4,
+    "type": "Animal Fantastique",
+    "strength": 4,
+    "stamina": 4,
+    "description": "Une créature ailée utilisée comme moyen de transport dans le monde magique.",
+    "rarity": "common"
+  },
+  {
+    "id": 29,
+    "name": "Griffe de Sombral",
+    "cost": 4,
+    "type": "Animal Fantastique",
+    "strength": 3,
+    "stamina": 3,
+    "description": "La griffe de cette créature est utilisée dans la fabrication des baguettes magiques.",
+    "rarity": "common"
+  },
+  {
+    "id": 30,
+    "name": "Hippocampe",
+    "cost": 3,
+    "type": "Animal Fantastique",
+    "strength": 4,
+    "stamina": 4,
+    "description": "Cette créature marine a une tête et une crinière de cheval.",
+    "rarity": "common"
+  },
+  {
+    "id": 31,
+    "name": "Hippogriffe",
+    "cost": 4,
+    "type": "Animal Fantastique",
+    "strength": 5,
+    "stamina": 5,
+    "description": "Un animal majestueux qui a le corps d'un cheval et les ailes d'un aigle.",
+    "rarity": "common"
+  },
+  {
+    "id": 32,
+    "name": "Horklump",
+    "cost": 1,
+    "type": "Animal Fantastique",
+    "strength": 1,
+    "stamina": 1,
+    "description": "Un petit champignon magique qui se nourrit de la moisissure.",
+    "rarity": "common"
+  },
+  {
+    "id": 33,
+    "name": "Mandragore",
+    "cost": 5,
+    "type": "Non-Être",
+    "strength": 8,
+    "stamina": 8,
+    "description": "Une créature semblable à un hibou qui hurle quand elle aperçoit un ennemi.",
+    "rarity": "common"
+  },
+  {
+    "id": 34,
+    "name": "Hydre",
+    "cost": 6,
+    "type": "Animal Fantastique",
+    "strength": 7,
+    "stamina": 7,
+    "description": "Une créature mythique avec plusieurs têtes.",
+    "rarity": "common"
+  },
+  {
+    "id": 35,
+    "name": "Jobarbille",
+    "cost": 1,
+    "type": "Animal Fantastique",
+    "strength": 1,
+    "stamina": 1,
+    "description": "Un petit insecte lumineux qui se nourrit de magie.",
+    "rarity": "uncommon"
+  },
+  {
+    "id": 36,
+    "name": "Kappa",
+    "cost": 3,
+    "type": "Animal Fantastique",
+    "strength": 3,
+    "stamina": 3,
+    "description": "Une créature aquatique qui aime jouer des tours aux humains.",
+    "rarity": "uncommon"
+  },
+  {
+    "id": 37,
+    "name": "Kelpy",
+    "cost": 3,
+    "type": "Animal Fantastique",
+    "strength": 3,
+    "stamina": 3,
+    "description": "Une créature marine qui apparaît sous la forme d'un cheval.",
+    "rarity": "uncommon"
+  },
+  {
+    "id": 38,
+    "name": "Kobold",
+    "cost": 2,
+    "type": "Non-Être",
+    "strength": 1,
+    "stamina": 1,
+    "description": "Une petite créature qui travaille comme serviteur pour les sorciers.",
+    "rarity": "uncommon"
+  },
+  {
+    "id": 39,
+    "name": "Léprechaun",
+    "cost": 3,
+    "type": "Non-Être",
+    "strength": 3,
+    "stamina": 3,
+    "description": "Une petite créature qui garde un pot d'or à la fin d'un arc-en-ciel.",
+    "rarity": "uncommon"
+  },
+  {
+    "id": 40,
+    "name": "Licorne",
+    "cost": 5,
+    "type": "Animal Fantastique",
+    "strength": 6,
+    "stamina": 6,
+    "description": "Une créature magique avec une corne unique sur la tête.",
+    "rarity": "uncommon"
+  },
+  {
+    "id": 41,
+    "name": "Limace de feu",
+    "cost": 3,
+    "type": "Animal Fantastique",
+    "strength": 3,
+    "stamina": 3,
+    "description": "Une créature qui ressemble à une limace et peut cracher du feu.",
+    "rarity": "uncommon"
+  },
+  {
+    "id": 42,
+    "name": "Loup-garou",
+    "cost": 4,
+    "type": "Être",
+    "strength": 4,
+    "stamina": 4,
+    "description": "Une créature qui peut se transformer d'un homme en un loup-garou.",
+    "rarity": "uncommon"
+  },
+  {
+    "id": 43,
+    "name": "Macusaure",
+    "cost": 4,
+    "type": "Animal Fantastique",
+    "strength": 4,
+    "stamina": 4,
+    "description": "Une créature qui ressemble à un dinosaure avec une peau dorée.",
+    "rarity": "uncommon"
+  },
+  {
+    "id": 44,
+    "name": "Magyar à pointes",
+    "cost": 6,
+    "type": "Animal Fantastique",
+    "strength": 7,
+    "stamina": 4,
+    "description": "Un dragon surpuissant",
+    "rarity": "uncommon"
+  },
+  {
+    "id": 45,
+    "name": "Manticore",
+    "cost": 6,
+    "type": "Animal Fantastique",
+    "strength": 5,
+    "stamina": 5,
+    "description": "Une créature mythique avec un corps de lion, une queue de scorpion et une tête humaine.",
+    "rarity": "uncommon"
+  },
+  {
+    "id": 46,
+    "name": "Moke",
+    "cost": 1,
+    "type": "Animal Fantastique",
+    "strength": 1,
+    "stamina": 1,
+    "description": "Un petit dragon qui peut se réduire à la taille d'un insecte.",
+    "rarity": "uncommon"
+  },
+  {
+    "id": 47,
+    "name": "Mooncalf",
+    "cost": 3,
+    "type": "Animal Fantastique",
+    "strength": 2,
+    "stamina": 3,
+    "description": "Une créature qui sort de sa tanière pendant la pleine lune.",
+    "rarity": "uncommon"
+  },
+  {
+    "id": 48,
+    "name": "Niffleur",
+    "cost": 2,
+    "type": "Animal Fantastique",
+    "strength": 1,
+    "stamina": 3,
+    "description": "Une petite créature qui aime chercher des objets de valeur.",
+    "rarity": "uncommon"
+  },
+  {
+    "id": 49,
+    "name": "Nundu",
+    "cost": 7,
+    "type": "Animal Fantastique",
+    "strength": 9,
+    "stamina": 9,
+    "description": "Une créature féroce ressemblant à un léopard, qui a un souffle mortel.",
+    "rarity": "uncommon"
+  },
+  {
+    "id": 50,
+    "name": "Occamy",
+    "cost": 5,
+    "type": "Animal Fantastique",
+    "strength": 6,
+    "stamina": 6,
+    "description": "Une créature serpentiforme avec des ailes qui change de taille selon l'espace disponible",
+    "rarity": "uncommon"
+  },
+  {
+    "id": 51,
+    "name": "Ogre",
+    "cost": 6,
+    "type": "Être",
+    "strength": 7,
+    "stamina": 6,
+    "description": "Une grande créature humanoïde violente et impulsive",
+    "rarity": "uncommon"
+  },
+  {
+    "id": 52,
+    "name": "Phénix",
+    "cost": 5,
+    "type": "Animal Fantastique",
+    "strength": 4,
+    "stamina": 6,
+    "description": "Une créature majestueuse capable de renaître de ses cendres",
+    "rarity": "uncommon"
+  },
+  {
+    "id": 53,
+    "name": "Plimpy",
+    "cost": 1,
+    "type": "Animal Fantastique",
+    "strength": 1,
+    "stamina": 1,
+    "description": "Une créature aquatique en forme de poire avec des nageoires et une capacité à sucer l'air des poumons",
+    "rarity": "uncommon"
+  },
+  {
+    "id": 54,
+    "name": "Pogrebin",
+    "cost": 2,
+    "type": "Animal Fantastique",
+    "strength": 2,
+    "stamina": 2,
+    "description": "Un petit gobelin poilu qui se nourrit de peur",
+    "rarity": "uncommon"
+  },
+  {
+    "id": 55,
+    "name": "Porlock",
+    "cost": 2,
+    "type": "Animal Fantastique",
+    "strength": 2,
+    "stamina": 2,
+    "description": "Une petite créature chevaline qui protège les écuries et les étables",
+    "rarity": "uncommon"
+  },
+  {
+    "id": 56,
+    "name": "Puffskein",
+    "cost": 1,
+    "type": "Animal Fantastique",
+    "strength": 1,
+    "stamina": 1,
+    "description": "Une boule de poils ronde et douce qui émet un bruit ronronnant apaisant",
+    "rarity": "uncommon"
+  },
+  {
+    "id": 57,
+    "name": "Quartodonte",
+    "cost": 3,
+    "type": "Animal Fantastique",
+    "strength": 2,
+    "stamina": 4,
+    "description": "Une créature ressemblant à un rhinocéros dotée d'une corne à la place du nez",
+    "rarity": "uncommon"
+  },
+  {
+    "id": 58,
+    "name": "Rat à patte lisse",
+    "cost": 1,
+    "type": "Animal Fantastique",
+    "strength": 1,
+    "stamina": 1,
+    "description": "Un rat sans poils et glabre qui aime manger des livres",
+    "rarity": "uncommon"
+  },
+  {
+    "id": 59,
+    "name": "Rémora",
+    "cost": 1,
+    "type": "Animal Fantastique",
+    "strength": 1,
+    "stamina": 1,
+    "description": "Une créature marine qui se fixe sur les navires et les retarde",
+    "rarity": "uncommon"
+  },
+  {
+    "id": 60,
+    "name": "Salamandre",
+    "cost": 4,
+    "type": "Animal Fantastique",
+    "strength": 4,
+    "stamina": 4,
+    "description": "Une créature de feu légendaire qui peut survivre aux flammes",
+    "rarity": "uncommon"
+  },
+  {
+    "id": 61,
+    "name": "Scroutt à pétard",
+    "cost": 5,
+    "type": "Animal Fantastique",
+    "strength": 5,
+    "stamina": 5,
+    "description": "Une créature insectoïde avec une carapace qui explose lorsque la créature est menacée",
+    "rarity": "uncommon"
+  },
+  {
+    "id": 62,
+    "name": "Selkie",
+    "cost": 4,
+    "type": "Animal Fantastique",
+    "strength": 3,
+    "stamina": 5,
+    "description": "Une créature marine qui peut prendre la forme humaine ou celle d'un phoque",
+    "rarity": "uncommon"
+  },
+  {
+    "id": 63,
+    "name": "Serpent Cornu",
+    "cost": 3,
+    "type": "Animal Fantastique",
+    "strength": 3,
+    "stamina": 3,
+    "description": "Un serpent avec des cornes sur la tête, capable de cracher du venin",
+    "rarity": "uncommon"
+  },
+  {
+    "id": 64,
+    "name": "Serpent de mer",
+    "cost": 4,
+    "type": "Animal Fantastique",
+    "strength": 4,
+    "stamina": 4,
+    "description": "Un grand serpent qui vit dans les océans et peut causer la mort par strangulation ou par empoisonnement",
+    "rarity": "rare"
+  },
+  {
+    "id": 65,
+    "name": "Snallygaster",
+    "cost": 4,
+    "type": "Animal Fantastique",
+    "strength": 4,
+    "stamina": 4,
+    "description": "Une créature qui ressemble à un dragon avec des ailes de chauve-souris et une queue de scorpion",
+    "rarity": "rare"
+  },
+  {
+    "id": 66,
+    "name": "Sombral",
+    "cost": 5,
+    "type": "Animal Fantastique",
+    "strength": 4,
+    "stamina": 6,
+    "description": "Une créature de l'obscurité qui se nourrit des émotions négatives",
+    "rarity": "rare"
+  },
+  {
+    "id": 67,
+    "name": "Sphinx",
+    "cost": 6,
+    "type": "Animal Fantastique",
+    "strength": 5,
+    "stamina": 7,
+    "description": "Une créature avec un corps de lion, des ailes d'oiseau et un visage humain qui pose des énigmes aux voyageurs",
+    "rarity": "rare"
+  },
+  {
+    "id": 68,
+    "name": "Sprite",
+    "cost": 1,
+    "type": "Animal Fantastique",
+    "strength": 1,
+    "stamina": 1,
+    "description": "Une petite créature humanoïde avec des ailes de papillon et un fort penchant pour les farces",
+    "rarity": "rare"
+  },
+  {
+    "id": 69,
+    "name": "Strangulot",
+    "cost": 3,
+    "type": "Animal Fantastique",
+    "strength": 3,
+    "stamina": 3,
+    "description": "Une créature tentaculaire capable d'étouffer ses proies",
+    "rarity": "rare"
+  },
+  {
+    "id": 70,
+    "name": "Sylphe",
+    "cost": 2,
+    "type": "Animal Fantastique",
+    "strength": 1,
+    "stamina": 3,
+    "description": "Une créature aérienne légère et délicate qui vit dans les airs",
+    "rarity": "rare"
+  },
+  {
+    "id": 71,
+    "name": "Tébo",
+    "cost": 1,
+    "type": "Animal Fantastique",
+    "strength": 2,
+    "stamina": 1,
+    "description": "Une petite créature velue semblable à un animal de compagnie qui ronfle fort",
+    "rarity": "rare"
+  },
+  {
+    "id": 72,
+    "name": "Thésard",
+    "cost": 1,
+    "type": "Non-Être",
+    "strength": 1,
+    "stamina": 1,
+    "description": "Une créature vivant dans les théières qui adore le thé et les gâteaux",
+    "rarity": "rare"
+  },
+  {
+    "id": 73,
+    "name": "Troll",
+    "cost": 4,
+    "type": "Être",
+    "strength": 4,
+    "stamina": 2,
+    "description": "Une créature humanoïde massive et brutale avec une force surhumaine",
+    "rarity": "rare"
+  },
+  {
+    "id": 74,
+    "name": "Trolls des montagnes",
+    "cost": 5,
+    "type": "Être",
+    "strength": 5,
+    "stamina": 4,
+    "description": "Des géants colériques de la montagne.",
+    "rarity": "rare"
+  },
+  {
+    "id": 75,
+    "name": "Trolls de la forêt",
+    "cost": 4,
+    "type": "Être",
+    "strength": 3,
+    "stamina": 3,
+    "description": "Des géants féroces de la forêt.",
+    "rarity": "rare"
+  },
+  {
+    "id": 76,
+    "name": "Urkneaz",
+    "cost": 2,
+    "type": "Animal Fantastique",
+    "strength": 2,
+    "stamina": 2,
+    "description": "Un animal ressemblant à un blaireau qui se nourrit d'objets magiques.",
+    "rarity": "rare"
+  },
+  {
+    "id": 77,
+    "name": "Vampire",
+    "cost": 5,
+    "type": "Non-Être",
+    "strength": 3,
+    "stamina": 3,
+    "description": "Une créature légendaire qui se nourrit du sang des vivants.",
+    "rarity": "rare"
+  },
+  {
+    "id": 78,
+    "name": "Vélane",
+    "cost": 3,
+    "type": "Non-Être",
+    "strength": 2,
+    "stamina": 2,
+    "description": "Des créatures féminines d'une beauté envoûtante.",
+    "rarity": "rare"
+  },
+  {
+    "id": 79,
+    "name": "Veracrasse",
+    "cost": 2,
+    "type": "Animal Fantastique",
+    "strength": 2,
+    "stamina": 1,
+    "description": "Un gros insecte volant qui se nourrit de chair humaine.",
+    "rarity": "rare"
+  },
+  {
+    "id": 80,
+    "name": "Veracrasse de mer",
+    "cost": 3,
+    "type": "Animal Fantastique",
+    "strength": 3,
+    "stamina": 2,
+    "description": "Un gros crustacé qui se nourrit de chair humaine.",
+    "rarity": "rare"
+  },
+  {
+    "id": 81,
+    "name": "Ver de terre géant",
+    "cost": 1,
+    "type": "Animal Fantastique",
+    "strength": 1,
+    "stamina": 1,
+    "description": "Un ver de terre géant pouvant atteindre plusieurs mètres de long.",
+    "rarity": "rare"
+  },
+  {
+    "id": 82,
+    "name": "Vipère d'Arbor",
+    "cost": 1,
+    "type": "Animal Fantastique",
+    "strength": 1,
+    "stamina": 1,
+    "description": "Un serpent venimeux aux écailles vertes.",
+    "rarity": "rare"
+  },
+  {
+    "id": 83,
+    "name": "Vivet doré",
+    "cost": 2,
+    "type": "Animal Fantastique",
+    "strength": 2,
+    "stamina": 2,
+    "description": "Un poisson brillant aux couleurs dorées.",
+    "rarity": "epic"
+  },
+  {
+    "id": 84,
+    "name": "Vivet doré des profondeurs",
+    "cost": 4,
+    "type": "Animal Fantastique",
+    "strength": 4,
+    "stamina": 4,
+    "description": "Un poisson brillant aux couleurs dorées, vivant dans les abysses.",
+    "rarity": "epic"
+  },
+  {
+    "id": 85,
+    "name": "Womatou",
+    "cost": 4,
+    "type": "Animal Fantastique",
+    "strength": 4,
+    "stamina": 3,
+    "description": "Un petit animal ressemblant à un rat, mais avec des dents acérées.",
+    "rarity": "epic"
+  },
+  {
+    "id": 86,
+    "name": "Wyvern",
+    "cost": 5,
+    "type": "Animal Fantastique",
+    "strength": 4,
+    "stamina": 4,
+    "description": "Un dragon sans pattes avant, avec des ailes et une queue de serpent.",
+    "rarity": "epic"
+  },
+  {
+    "id": 87,
+    "name": "Yéti",
+    "cost": 3,
+    "type": "Animal Fantastique",
+    "strength": 3,
+    "stamina": 3,
+    "description": "Une créature simiesque vivant dans les régions montagneuses.",
+    "rarity": "epic"
+  },
+  {
+    "id": 88,
+    "name": "Yumbo",
+    "cost": 1,
+    "type": "Animal Fantastique",
+    "strength": 1,
+    "stamina": 1,
+    "description": "Un oiseau géant avec un bec énorme.",
+    "rarity": "epic"
+  },
+  {
+    "id": 89,
+    "name": "Zizanie",
+    "cost": 3,
+    "type": "Animal Fantastique",
+    "strength": 2,
+    "stamina": 2,
+    "description": "Un petit être magique ressemblant à un gnome.",
+    "rarity": "epic"
+  },
+  {
+    "id": 90,
+    "name": "Zouwu",
+    "cost": 6,
+    "type": "Animal Fantastique",
+    "strength": 6,
+    "stamina": 4,
+    "description": "Un énorme chat noir avec une queue gigantesque.",
+    "rarity": "epic"
+  },
+  {
+    "id": 91,
+    "name": "Gorgone",
+    "cost": 5,
+    "type": "Non-Être",
+    "strength": 4,
+    "stamina": 3,
+    "description": "Une créature légendaire dotée de serpents à la place des cheveux.",
+    "rarity": "epic"
+  },
+  {
+    "id": 92,
+    "name": "Béhémoth",
+    "cost": 6,
+    "type": "Être",
+    "strength": 5,
+    "stamina": 5,
+    "description": "Une créature gigantesque mentionnée dans la Bible.",
+    "rarity": "epic"
+  },
+  {
+    "id": 93,
+    "name": "Basilic d'Afrique",
+    "cost": 4,
+    "type": "Animal Fantastique",
+    "strength": 4,
+    "stamina": 2,
+    "description": "Un serpent légendaire qui peut tuer d'un regard.",
+    "rarity": "epic"
+  },
+  {
+    "id": 94,
+    "name": "Bézoard",
+    "cost": 1,
+    "type": "Animal Fantastique",
+    "strength": 1,
+    "stamina": 1,
+    "description": "Une pierre trouvée dans l'estomac de certains animaux, censée avoir des propriétés médicinales.",
+    "rarity": "epic"
+  },
+  {
+    "id": 95,
+    "name": "Caméléon magique",
+    "cost": 2,
+    "type": "Animal Fantastique",
+    "strength": 1,
+    "stamina": 3,
+    "description": "Un caméléon qui peut changer de couleur selon son environnement.",
+    "rarity": "lengendary"
+  },
+  {
+    "id": 96,
+    "name": "Carrosse ailé",
+    "cost": 6,
+    "type": "Animal Fantastique",
+    "strength": 5,
+    "stamina": 5,
+    "description": "Un carrosse qui peut voler grâce à des ailes magiques.",
+    "rarity": "lengendary"
+  },
+  {
+    "id": 97,
+    "name": "Cracmol",
+    "cost": 2,
+    "type": "Non-Être",
+    "strength": 1,
+    "stamina": 3,
+    "description": "Une personne qui n'a pas de pouvoirs magiques.",
+    "rarity": "lengendary"
+  },
+  {
+    "id": 98,
+    "name": "Djinn",
+    "cost": 5,
+    "type": "Non-Être",
+    "strength": 3,
+    "stamina": 3,
+    "description": "Une créature magique qui peut exaucer les vœux.",
+    "rarity": "lengendary"
+  },
+  {
+    "id": 99,
+    "name": "Écureuil volant",
+    "cost": 1,
+    "type": "Animal Fantastique",
+    "strength": 1,
+    "stamina": 1,
+    "description": "Un petit animal qui peut voler grâce à une membrane entre ses pattes.",
+    "rarity": "lengendary"
+  },
+  {
+    "id": 100,
+    "name": "Feu follet",
+    "cost": 1,
+    "type": "Animal Fantastique",
+    "strength": 1,
+    "stamina": 1,
+    "description": "Une petite lumière qui apparaît la nuit dans les endroits humides.",
+    "rarity": "lengendary"
+  },
+  {
+    "id": 101,
+    "name": "Génie",
+    "cost": 4,
+    "type": "Non-Être",
+    "strength": 2,
+    "stamina": 4,
+    "description": "Une créature magique qui peut exaucer les vœux.",
+    "rarity": "lengendary"
+  },
+  {
+    "id": 102,
+    "name": "Mana",
+    "cost": 1,
+    "type": "Mana",
+    "strength": 0,
+    "stamina": 0,
+    "description": "Une pierre de mana qui permet d'invoquer des créatures",
+    "rarity": "mana"
+  }
+]
