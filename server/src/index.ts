@@ -181,22 +181,84 @@ app.post('/defend', async (req: Request, res: Response) => {
     const attackerBattlefield = attackerBoard.battlefield;
     if (!attackerBattlefield) return;
 
-    const battlingCards: Array<{ attackingCardId: string, defendingCardIds: Array<string> }> = req.body.battleingCards;
+    const battlingCardIds: Array<{ attackingCardId: string, defendingCardIds: Array<string> }> = req.body.battlingCardIds;
 
-    let defendersCards: Array<InGameCard> = [];
-    battlingCards.forEach(battlingCard => {
+    battlingCardIds.forEach(battlingCard => {
         const attackingCard = attackerBattlefield.find(inGameCard => inGameCard.id === battlingCard.attackingCardId);
         if (!attackingCard) return;
         battlingCard.defendingCardIds.forEach(defendingCardId => {
             const defendingCard = defenderBattlefield.find(inGameCard => inGameCard.id === defendingCardId);
             if (!defendingCard) return;
-            defendersCards.push(defendingCard);
+            defenderBoard!.defendingCards!.push(defendingCard);
         });
     });
 
-    defenderBoard.defendingCards = defendersCards;
-
     game.step = Steps.RESOLVE;
+
+    const fightingCardsStats: Array<{
+                                        attackerCardStats: {id: string, attack: number, health: number},
+                                        defenderCardsStats: Array<{id: string, attack: number, health: number}>
+                                    }> = [];
+
+    req.body.battlingCardIds.forEach((battlingCardIds: {attackingCardId: string, defendingCardIds: Array<string>}) => {
+        const attackingCard = defenderBattlefield.find(card => card.id === battlingCardIds.attackingCardId);
+        if (!attackingCard) return;
+        const attackingCardStats: {id: string, attack: number, health: number} = {
+            id: battlingCardIds.attackingCardId,
+            attack: attackingCard.base_strength,
+            health: attackingCard.base_health
+        };
+        const defendingCardsStats: Array<{id: string, attack: number, health: number}> = []
+        battlingCardIds.defendingCardIds.forEach(defendingCardId => {
+            const defendingCard = defenderBattlefield.find(card => card.id === defendingCardId);
+            if (!defendingCard) return;
+            defendingCardsStats.push({
+                id: defendingCardId,
+                attack: defendingCard.base_strength,
+                health: defendingCard.base_health
+            });
+        });
+        fightingCardsStats.push({
+            attackerCardStats: attackingCardStats,
+            defenderCardsStats: defendingCardsStats
+        });
+    })
+
+    let resolveCardList: {
+                            attackerSurvivingCards: Array<{id: string, current_health: number}>,
+                            defenderSurvivingCards: Array<{id: string, current_health: number}>,
+                            attackerDeadCards: Array<{id: string, current_health: number}>,
+                            defenderDeadCards: Array<{id: string, current_health: number}>
+                            };
+
+    const attackerSurvivingCards = [];
+    const attackerDeadCards = [];
+    const defenderSurvivingCards = [];
+    const defenderDeadCards = [];
+
+    fightingCardsStats.forEach(fightingCardStats => {
+        const survivingDefenders: Array<{id: string, current_health: number}> = [];
+        const deadDefenders: Array<{id: string, current_health: number}> = [];
+
+        fightingCardStats.defenderCardsStats.forEach(defenderCardStats => {
+            const current_health: number = defenderCardStats.health - fightingCardStats.attackerCardStats.attack;
+            if (current_health <= 0) deadDefenders.push({id: defenderCardStats.id, current_health: current_health});
+            else survivingDefenders.push({id: defenderCardStats.id, current_health: current_health});
+        })
+
+        const damageDealtToAttacker: number = [
+            ...fightingCardStats.defenderCardsStats.map(defenderCardStats => defenderCardStats.health)
+        ].reduce((a, b) => a + b, 0);
+
+        const current_health: number = fightingCardStats.attackerCardStats.health - damageDealtToAttacker;
+        if (current_health <= 0) attackerDeadCards.push({id: fightingCardStats.attackerCardStats.id, current_health: current_health});
+        else attackerSurvivingCards.push({id: fightingCardStats.attackerCardStats.id, current_health: current_health});
+
+        defenderSurvivingCards.push(...survivingDefenders);
+        defenderDeadCards.push(...deadDefenders);
+    })
+    //TODO: La liste des cartes mortes et vivante sur les deux board est faite, plus qu'à retirer les cartes mortes / les mettres dans le graveyard, puis evoyer au front ce résultat
+
 })
 
 
