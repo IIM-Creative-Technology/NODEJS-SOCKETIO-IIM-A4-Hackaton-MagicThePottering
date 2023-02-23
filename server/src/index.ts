@@ -28,28 +28,11 @@ const users: Map<string, { username: string, room: string }> = new Map();
 
 const games: Map<string, Game> = new Map();
 
-const gameBoardPlayer1: Board = {
-    id: "player1",
-    hand: null,
-    deck: null,
-    graveyard: null,
-    battlefield: null,
-    attackingCards: null,
-    defendingCards: null,
-    mana: null,
-    health: 20
-}
-const gameBoardPlayer2: Board = {
-    id: "player2",
-    hand: null,
-    deck: null,
-    graveyard: null,
-    battlefield: null,
-    attackingCards: null,
-    defendingCards: null,
-    mana: null,
-    health: 20
-}
+const gameBoardPlayer1: Board = new Board("player1",);
+
+
+
+const gameBoardPlayer2: Board = new Board("player2",);
 
 games.set("laSuperGame", new Game(null, [gameBoardPlayer1, gameBoardPlayer2]));
 
@@ -60,19 +43,19 @@ app.get('/init-game', async (req: Request, res: Response) => {
         .orderBy("RANDOM()")
         .getMany();
 
-    playerDeck = data.map(card => new InGameCard(uuidv4(), card.id, card.name, card.description, card.image_url, card.base_mana_cost, card.type, card.base_strength, card.base_health))
+    playerDeck = data.map(card => new InGameCard(uuidv4(), card.id, card.name, card.description, card.image_url, card.base_mana_cost, card.type, card.base_strength, card.base_health));
 
     playerHand = playerDeck.slice(0, 5).splice(0, 5);
 
-    const game = games.get(req.body.roomId)
+    const game = games.get(req.body.roomId);
     if (!game) return;
 
-    game.step = Steps.BEGIN
+    game.step = Steps.BEGIN;
 
     res.send({
         playerHand: playerHand,
         playerDeck: playerDeck
-    })
+    });
 });
 
 
@@ -224,17 +207,10 @@ app.post('/defend', async (req: Request, res: Response) => {
         });
     })
 
-    let resolveCardList: {
-                            attackerSurvivingCards: Array<{id: string, current_health: number}>,
-                            defenderSurvivingCards: Array<{id: string, current_health: number}>,
-                            attackerDeadCards: Array<{id: string, current_health: number}>,
-                            defenderDeadCards: Array<{id: string, current_health: number}>
-                            };
-
-    const attackerSurvivingCards = [];
-    const attackerDeadCards = [];
-    const defenderSurvivingCards = [];
-    const defenderDeadCards = [];
+    const attackerSurvivingCards: Array<{id: string, current_health: number}> = [];
+    const attackerDeadCards: Array<{id: string, current_health: number}> = [];
+    const defenderSurvivingCards: Array<{id: string, current_health: number}> = [];
+    const defenderDeadCards: Array<{id: string, current_health: number}> = [];
 
     fightingCardsStats.forEach(fightingCardStats => {
         const survivingDefenders: Array<{id: string, current_health: number}> = [];
@@ -257,8 +233,12 @@ app.post('/defend', async (req: Request, res: Response) => {
         defenderSurvivingCards.push(...survivingDefenders);
         defenderDeadCards.push(...deadDefenders);
     })
-    //TODO: La liste des cartes mortes et vivante sur les deux board est faite, plus qu'à retirer les cartes mortes / les mettres dans le graveyard, puis evoyer au front ce résultat
 
+    attackerBoard.updateBattlefield(attackerSurvivingCards);
+    attackerBoard.updateGraveyard(attackerDeadCards);
+
+    defenderBoard.updateBattlefield(defenderSurvivingCards);
+    defenderBoard.updateGraveyard(defenderDeadCards);
 })
 
 
@@ -300,17 +280,7 @@ const port = 8080;
 
             socket.join(params.roomName);
             const boards: Array<Board> = [];
-            boards.push({
-                id: socket.id,
-                hand: null,
-                deck: null,
-                graveyard: null,
-                battlefield: null,
-                attackingCards: null,
-                defendingCards: null,
-                mana: null,
-                health: null
-            })
+            boards.push(new Board("player1",));
             games.set(params.roomName, new Game(null, boards));
         });
     });
