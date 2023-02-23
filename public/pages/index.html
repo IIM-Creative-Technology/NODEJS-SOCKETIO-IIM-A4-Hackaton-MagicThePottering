@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Magic Harry Potter</title>
+    <link rel="stylesheet" type="text/css" href="pages/style.css" />
+</head>
+
+<body>
+    <div class="windowBackground" id="windowBackground">
+        <div class="window" id="window">
+            <div class="windowHeader">
+                <button class="buttonCloseMenu" id="closeWindow">╳</button>
+                <div class="windowTitle">
+                    <p>Aide</p>
+                </div>
+            </div>
+            <div class="windowText" id="windowText"></div>
+        </div>
+
+        <div class="errorBox" id="errorBox">
+            <div>Erreur :</div><br>
+            <div id="errorBoxText">text</div>
+        </div>
+
+        <div class="cardDetails" id="cardDetails"></div>
+    </div>
+
+    <div class="topSpace">
+        <div class="cardsSpace" id="cardsSpace"></div>
+        <div class="deckBuildingDiv" id="deckBuildingDiv"></div>
+    </div>
+
+    <div class="infoBar" id="infoBar">
+        <div class="divMaison">
+            <p>Maison : <span>-</span></p>
+        </div>
+        <div class="divPoints">
+            <p>Points de maison : <span>0</span></p>
+        </div>
+        <div class="divKeys">
+            <p>Clé(s) de booster : <span class="boosterKeysValue" id="keyValue">3</span></p>
+        </div>
+        <div class="divReady">
+            <button class="readyButton"><span>Jouer</span> - <span>0 joueur(s) sur 2 prêt</span></button>
+        </div>
+        <div class="divDeck">
+            <button class="sortCardsButton" id="sortCardsButton">Trier cartes: <span id="cardSortType">Aucun</span></button>
+        </div>
+        <div class="divDeck">
+            <button class="deckButton" id="deckBuildingButton">Deck building</button>
+        </div>
+        <button class="buttonHelp" id="openHelp">?</button>
+        <button class="buttonCloseMenu" id="closeMenu">╳</button>
+    </div>
+
+    <div class="boosterSpace" id="boosterSpace"></div>
+
+    <script src='/socket.io/socket.io.js'></script>
+    <script> var socket = io(); </script>
+    <script src="pages/script.js"></script>
+</body>
+</html>

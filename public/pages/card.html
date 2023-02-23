@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Magic Harry Potter</title>
+    <link rel="stylesheet" type="text/css" href="styleCard.css" />
+</head>
+
+<body>
+    <object class="svgCard" id="svgCard" data="../assets/Pottering-Card.svg" type="image/svg+xml"></object>
+    <!--<button onclick="test()">Test</button>-->
+
+    <script>
+        const cardInfos = [
+            "Acromantula",
+            "5",
+            "Animal Fantastique",
+            "7",
+            "6",
+            "Une créature arachnéenne gigantesque, capable de parler et de comprendre le langage humain.",
+            "legendary",
+            "Gorgon.png",
+        ];
+
+        const cardRarityColor = {
+            common: "rgba(0, 0, 0, 0.25)",
+            uncommon: "rgba(0, 0, 0, 0.25)",
+            rare: "rgb(0, 0, 255)",
+            epic: "rgb(212, 0, 255)",
+            legendary: "rgb(255, 149, 0)",
+        };
+
+        window.onload = function(){  
+            const svgDoc = document.getElementById("svgCard").contentDocument;
+            svgDoc.getElementById("cardName").textContent = cardInfos[0];
+            svgDoc.getElementById("cardCost").textContent = cardInfos[1];
+            svgDoc.getElementById("cardType").textContent = cardInfos[2];
+            svgDoc.getElementById("cardStrength").textContent = cardInfos[3];
+            svgDoc.getElementById("cardEndurance").textContent = cardInfos[4];
+            svgDoc.getElementById("cardDescription").textContent = cardInfos[5];
+            svgDoc.getElementById("cardRarity").style.fill=cardRarityColor[cardInfos[6]];
+            svgDoc.getElementById("cardBackground").style = `stop-color:${cardRarityColor[cardInfos[6]]};stop-opacity:0.65`;
+            //const image = svgDoc.getElementById("cardImage").getAttributeNS('http://www.w3.org/1999/xlink', 'href');
+            svgDoc.getElementById("cardImage").setAttributeNS('http://www.w3.org/1999/xlink', 'href', cardInfos[7]);
+        }
+
+        /*
+        function test() {
+            const svgDoc = document.getElementById("svgCard").contentDocument;
+            svgDoc.getElementById("cardName").textContent = cardInfos[0];
+            svgDoc.getElementById("cardCost").textContent = cardInfos[1];
+            svgDoc.getElementById("cardType").textContent = cardInfos[2];
+            svgDoc.getElementById("cardStrength").textContent = cardInfos[3];
+            svgDoc.getElementById("cardEndurance").textContent = cardInfos[4];
+            svgDoc.getElementById("cardRarity").style.fill=cardRarityColor[cardInfos[6]];
+        }
+        */
+        
+
+    </script>
+</body>
+
+</html>

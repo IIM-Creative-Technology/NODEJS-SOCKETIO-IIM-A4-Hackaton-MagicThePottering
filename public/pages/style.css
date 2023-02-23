@@ -1,0 +1,413 @@
+body{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: rgb(69, 69, 69);
+}
+
+.errorBox{
+    display: none;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    width: 350px;
+    height: 120px;
+    background-color: crimson;
+    color: white;
+}
+
+.topSpace{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.deckBuildingDiv{
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    /*position: absolute;
+    top: 0;
+    right: 0;
+    height: calc(100% - 30% - 5% - 2px);
+    max-height: calc(100% - 220px - 40px - 2px);*/
+    height: 100%;
+    width: 20%;
+    min-width: 200px;
+    background-color: rgba(0, 0, 0, 0.8);
+    z-index: 15;
+    overflow: auto;
+}
+
+.windowBackground{
+    position: absolute;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100vh;
+    z-index: 20;
+    background-color: rgba(0, 0, 0, 0.75)
+}
+
+.window{
+    display: none;
+    width: 35%;
+    height: 70vh;
+    background-color: white;
+}
+
+.cardDetails{
+    display: none;
+    justify-content: center;
+    align-items: center;
+    height: 80%;
+    aspect-ratio: 0.625;
+    background-color: white;
+    font-size: 100px;
+}
+
+.windowHeader{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+    height: 40px;
+    border-bottom: solid black 1px;
+}
+
+.windowTitle{
+    width: 100%;
+    text-align: center;
+}
+
+.cardsSpace{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    align-items: flex-start;
+    width: 100%;
+    height: 100%;
+    background-color: rgb(58, 58, 58);
+    overflow: auto;
+}
+
+.infoBar{
+    width: 100%;
+    height: 5%;
+    min-height: 40px;
+    display: flex;
+    flex-direction: row;
+    background-color: rgb(57, 54, 55);
+    border-top: solid orange 1px;
+    -moz-box-shadow: 0 0 30px rgb(255, 162, 0, 0.25);
+    -webkit-box-shadow: 0 0 30px rgb(255, 162, 0, 0.25);
+    box-shadow: 0 0 30px rgb(255, 162, 0, 0.25);
+}
+
+.divMaison, .divPoints, .divKeys, .divDeck, .divReady{
+    display: flex;
+    justify-content: center;
+    align-items: center;    
+    /*width: 20%;*/
+    width: 100%;
+    background-color: white;
+    border-right: solid black 1px;
+}
+
+.divKeys{
+    background-color: rgb(36, 36, 36);
+    color: white;
+}
+
+.boosterKeysValue{
+    color: lime;
+}
+
+.deckButton, .readyButton, .sortCardsButton{
+    width: 100%;
+    height: 100%;
+    border: 0;
+    background-color: orange;
+    transition: 0.25s;
+    cursor: pointer;
+}
+
+.sortCardsButton{
+    background-color: magenta;
+}
+
+.sortCardsButton:hover{
+    background-color: rgb(160, 0, 160);
+}
+
+.readyButton{
+    background-color: rgb(0, 13, 255);
+    color: white;
+}
+
+.readyButton:hover{
+    background-color: rgb(0, 7, 148);
+}
+
+.deckButton:hover{
+    background-color: rgb(200, 130, 0);
+}
+
+.buttonHelp, .buttonCloseMenu{
+    height: 100%;
+    aspect-ratio: 1/1;
+    border: 0;
+    cursor: pointer;
+    transition: .25s;
+}
+
+.buttonHelp{
+    background-color: lime;
+    font-size: 20px;
+}
+
+.buttonHelp:hover{
+    background-color: rgb(0, 186, 0);
+}
+
+.buttonCloseMenu{
+    background-color: crimson;
+    color: white;
+    font-size: 14px;
+}
+
+.buttonCloseMenu:hover{
+    background-color: rgb(170, 15, 46);
+}
+
+
+
+.boosterSpace{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    width: 100%;
+    height: 30%;
+    min-height: 220px;
+    background-color: rgb(39, 39, 39);
+    z-index: 10;
+    overflow: auto;
+}
+
+.booster, .card{
+    width: 125px;
+    min-width: 125px;
+    height: 200px;
+    /*background-color: white;*/
+    margin: 10px;
+    border-radius: 2px;
+    cursor: pointer;
+    transition: .25s;
+    border: solid 1px black;
+}
+
+.card{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 30px;
+}
+
+.booster:hover{
+    transform: scale(1.05);
+    border: solid orangered 1px;
+    -moz-box-shadow: 0 0 10px orange;
+    -webkit-box-shadow: 0 0 10px orange;
+    box-shadow: 0 0 10px orange;
+}
+
+.card:hover{
+    transform: scale(1.05);
+}
+
+.deckListCard{
+    display: flex;
+    flex-direction: row;
+    width: 90%;
+    height: 20px;
+    min-height: 20px;
+    background-color: white;
+    margin: 2px;
+    cursor: pointer;
+    transition: .25s;
+}
+
+.deckListCard:hover{
+    transform: scale(1.025, 1.075);
+}
+
+.cardRarity, .cardCost{
+    height: 100%;
+    aspect-ratio: 1/1;
+}
+
+.cardCost{
+    background-color: rgba(0, 221, 255, 0.35);
+}
+
+.cardName{
+    width: 100%;
+    margin: 0 5px 0 5px;
+}
+
+.cardRemove{
+    height: 100%;
+    aspect-ratio: 1/1;
+    background-color: crimson;
+    border: 0;
+    color: white;
+    transition: .25s;
+    cursor: pointer;
+    font-size: 8px;
+}
+
+.cardRemove:hover{
+    background-color: rgb(173, 15, 47);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.common{
+    border: solid rgb(0, 0, 0) 1px;
+    -moz-box-shadow: 0 0 10px rgb(0, 0, 0);
+    -webkit-box-shadow: 0 0 10px rgb(0, 0, 0);
+    box-shadow: 0 0 10px rgb(0, 0, 0);
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+.uncommon{
+    border: solid rgb(43, 255, 0) 1px;
+    -moz-box-shadow: 0 0 10px rgb(30, 179, 0);
+    -webkit-box-shadow: 0 0 10px rgb(30, 179, 0);
+    box-shadow: 0 0 10px rgb(30, 179, 0);
+    background-color: rgba(30, 179, 0, 0.1);
+}
+
+.rare{
+    border: solid rgb(0, 0, 255) 1px;
+    -moz-box-shadow: 0 0 10px rgb(0, 0, 205);
+    -webkit-box-shadow: 0 0 10px rgb(0, 0, 205);
+    box-shadow: 0 0 10px rgb(0, 0, 205);
+    background-color: rgba(0, 0, 205, 0.1);
+}
+
+.epic{
+    border: solid rgb(212, 0, 255) 1px;
+    -moz-box-shadow: 0 0 10px rgb(166, 0, 200);
+    -webkit-box-shadow: 0 0 10px rgb(166, 0, 200);
+    box-shadow: 0 0 10px rgb(166, 0, 200);
+    background-color: rgba(166, 0, 200, 0.1);
+}
+
+.legendary{
+    border: solid rgb(255, 149, 0) 1px;
+    -moz-box-shadow: 0 0 10px rgb(255, 149, 0);
+    -webkit-box-shadow: 0 0 10px rgb(255, 149, 0);
+    box-shadow: 0 0 10px rgb(255, 149, 0);
+    background-color: rgba(255, 149, 0, 0.1);
+}
+
+
+
+
+
+
+
+
+
+
+
+.common2{
+    border: solid rgb(0, 0, 0) 1px;
+    -moz-box-shadow: 0 0 60px rgb(0, 0, 0);
+    -webkit-box-shadow: 0 0 60px rgb(0, 0, 0);
+    box-shadow: 0 0 60px rgb(0, 0, 0);
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+.uncommon2{
+    border: solid rgb(43, 255, 0) 1px;
+    -moz-box-shadow: 0 0 60px rgb(30, 179, 0);
+    -webkit-box-shadow: 0 0 60px rgb(30, 179, 0);
+    box-shadow: 0 0 60px rgb(30, 179, 0);
+    background-color: rgba(30, 179, 0, 0.1);
+}
+
+.rare2{
+    border: solid rgb(0, 0, 255) 1px;
+    -moz-box-shadow: 0 0 60px rgb(0, 0, 205);
+    -webkit-box-shadow: 0 0 60px rgb(0, 0, 205);
+    box-shadow: 0 0 60px rgb(0, 0, 205);
+    background-color: rgba(0, 0, 205, 0.1);
+}
+
+.epic2{
+    border: solid rgb(212, 0, 255) 1px;
+    -moz-box-shadow: 0 0 60px rgb(166, 0, 200);
+    -webkit-box-shadow: 0 0 60px rgb(166, 0, 200);
+    box-shadow: 0 0 60px rgb(166, 0, 200);
+    background-color: rgba(166, 0, 200, 0.1);
+}
+
+.legendary2{
+    border: solid rgb(255, 149, 0) 1px;
+    -moz-box-shadow: 0 0 60px rgb(255, 149, 0);
+    -webkit-box-shadow: 0 0 60px rgb(255, 149, 0);
+    box-shadow: 0 0 60px rgb(255, 149, 0);
+    background-color: rgba(255, 149, 0, 0.1);
+}
+
+.commonCard{background-color: rgba(0, 0, 0, 0.25);}
+.uncommonCard{background-color: rgb(43, 255, 0);}
+.rareCard{background-color: rgb(0, 0, 255);}
+.epicCard{background-color: rgb(212, 0, 255);}
+.legendaryCard{background-color: rgb(255, 149, 0)}
