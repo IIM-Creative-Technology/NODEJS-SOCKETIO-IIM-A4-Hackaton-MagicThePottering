@@ -211,24 +211,28 @@ app.post('/defend', async (req: Request, res: Response) => {
     const attackerDeadCards: Array<{id: string, current_health: number}> = [];
     const defenderSurvivingCards: Array<{id: string, current_health: number}> = [];
     const defenderDeadCards: Array<{id: string, current_health: number}> = [];
+    let defenderDamageDealt: number = 0;
 
     fightingCardsStats.forEach(fightingCardStats => {
         const survivingDefenders: Array<{id: string, current_health: number}> = [];
         const deadDefenders: Array<{id: string, current_health: number}> = [];
 
-        fightingCardStats.defenderCardsStats.forEach(defenderCardStats => {
-            const current_health: number = defenderCardStats.health - fightingCardStats.attackerCardStats.attack;
-            if (current_health <= 0) deadDefenders.push({id: defenderCardStats.id, current_health: current_health});
-            else survivingDefenders.push({id: defenderCardStats.id, current_health: current_health});
-        })
+        if (fightingCardStats.defenderCardsStats !== []){
+            fightingCardStats.defenderCardsStats.forEach(defenderCardStats => {
+                const current_health: number = defenderCardStats.health - fightingCardStats.attackerCardStats.attack;
+                if (current_health <= 0) deadDefenders.push({id: defenderCardStats.id, current_health: current_health});
+                else survivingDefenders.push({id: defenderCardStats.id, current_health: current_health});
+            })
+            const damageDealtToAttacker: number = [
+                ...fightingCardStats.defenderCardsStats.map(defenderCardStats => defenderCardStats.health)
+            ].reduce((a, b) => a + b, 0);
 
-        const damageDealtToAttacker: number = [
-            ...fightingCardStats.defenderCardsStats.map(defenderCardStats => defenderCardStats.health)
-        ].reduce((a, b) => a + b, 0);
-
-        const current_health: number = fightingCardStats.attackerCardStats.health - damageDealtToAttacker;
-        if (current_health <= 0) attackerDeadCards.push({id: fightingCardStats.attackerCardStats.id, current_health: current_health});
-        else attackerSurvivingCards.push({id: fightingCardStats.attackerCardStats.id, current_health: current_health});
+            const current_health: number = fightingCardStats.attackerCardStats.health - damageDealtToAttacker;
+            if (current_health <= 0) attackerDeadCards.push({id: fightingCardStats.attackerCardStats.id, current_health: current_health});
+            else attackerSurvivingCards.push({id: fightingCardStats.attackerCardStats.id, current_health: current_health});
+        } else {
+            defenderDamageDealt += fightingCardStats.attackerCardStats.attack
+        }
 
         defenderSurvivingCards.push(...survivingDefenders);
         defenderDeadCards.push(...deadDefenders);
@@ -239,6 +243,11 @@ app.post('/defend', async (req: Request, res: Response) => {
 
     defenderBoard.updateBattlefield(defenderSurvivingCards);
     defenderBoard.updateGraveyard(defenderDeadCards);
+
+    defenderBoard.updateHealth(defenderDamageDealt);
+
+    game.step = Steps.BEGIN;
+
 })
 
 

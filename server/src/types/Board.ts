@@ -28,6 +28,15 @@ export default class Board {
         this.battlefield = newBattlefield;
         return newBattlefield;
     }
+
+    updateHealth(damageTaken: number): number {
+        return this.health -= damageTaken
+    }
+
+    isDead(): boolean {
+        return this.health <= 0;
+    }
+
     resetAttackingCards() {
         this.attackingCards = [];
         return this.attackingCards;
