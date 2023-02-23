@@ -37,6 +37,9 @@ const LoginPage: FC = () => {
           throw data;
         }
         localStorage.setItem('user_token', data.token);
+        localStorage.setItem('user_id', data.id)
+        localStorage.setItem('username', data.username)
+        localStorage.setItem('house_id', data.house_id)
         location.assign('/');
       })
       .catch(({ message }: { message: string }) => {
