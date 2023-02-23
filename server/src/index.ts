@@ -217,7 +217,7 @@ app.post('/defend', async (req: Request, res: Response) => {
         const survivingDefenders: Array<{id: string, current_health: number}> = [];
         const deadDefenders: Array<{id: string, current_health: number}> = [];
 
-        if (fightingCardStats.defenderCardsStats !== []){
+        if (fightingCardStats.defenderCardsStats.length > 0){
             fightingCardStats.defenderCardsStats.forEach(defenderCardStats => {
                 const current_health: number = defenderCardStats.health - fightingCardStats.attackerCardStats.attack;
                 if (current_health <= 0) deadDefenders.push({id: defenderCardStats.id, current_health: current_health});
