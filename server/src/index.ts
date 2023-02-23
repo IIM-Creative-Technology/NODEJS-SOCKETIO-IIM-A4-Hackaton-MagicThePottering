@@ -14,6 +14,8 @@ import InGameCard from './types/InGameCard';
 import Card from './entities/Card';
 import Game from './types/Game';
 import Board from './types/Board';
+import fetch from 'isomorphic-fetch';
+
 
 const app = express();
 app.use(express.json());
@@ -29,6 +31,7 @@ const games: Map<string, Game> = new Map();
 
 const gameBoardPlayer1: Board = {
     id: "player1",
+    api_id: 999,
     hand: null,
     deck: null,
     graveyard: null,
@@ -38,6 +41,7 @@ const gameBoardPlayer1: Board = {
 }
 const gameBoardPlayer2: Board = {
     id: "player2",
+    api_id: 666,
     hand: null,
     deck: null,
     graveyard: null,
@@ -46,6 +50,7 @@ const gameBoardPlayer2: Board = {
     health: 20
 }
 
+// à déplacer au moment du join dans la room
 games.set("laSuperGame", new Game([gameBoardPlayer1, gameBoardPlayer2]));
 
 app.get('/init-game', async (req: Request, res: Response) => {
@@ -59,6 +64,21 @@ app.get('/init-game', async (req: Request, res: Response) => {
     playerDeck = data.map(card => new InGameCard(uuidv4(), card.name, card.description, card.image_url, card.base_mana_cost, card.type, card.base_strength, card.base_health))
 
     playerHand = playerDeck.slice(0, 5).splice(0, 5);
+
+    const currentGame = games.get(req.body.roomId);
+
+    //game start
+    await fetch("https://hp-api-iim.azurewebsites.net/matches/start", {
+        method: "POST",
+        headers: [["Content-Type", "application/json"]],
+        body: JSON.stringify({
+            game: "Magic The Pottering",
+            userIds: [
+                currentGame?.boards[0].api_id,
+                currentGame?.boards[1].api_id
+            ]
+        })
+    })
 
     // res.send({
     //     playerHand: playerHand,
@@ -168,6 +188,7 @@ const port = 8080;
             const boards: Array<Board> = [];
             boards.push({
                 id: socket.id,
+                api_id: 999,
                 hand: null,
                 deck: null,
                 graveyard: null,
